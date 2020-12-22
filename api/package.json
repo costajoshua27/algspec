@@ -1,0 +1,14 @@
+{
+  "name": "algspec-api",
+  "version": "1.0.0",
+  "description": "Backend API for algspec",
+  "main": "index.js",
+  "scripts": {
+    "serve": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
