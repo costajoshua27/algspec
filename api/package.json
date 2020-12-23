@@ -4,7 +4,7 @@
   "description": "Backend API for algspec",
   "main": "index.js",
   "scripts": {
-    "serve": "node index.js"
+    "serve": "node index.js dfassdfasdfasdf"
   },
   "author": "",
   "license": "ISC",

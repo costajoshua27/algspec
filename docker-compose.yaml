@@ -1,0 +1,10 @@
+version: "3.9"
+services:
+  algspec-ui:
+    build: "./algspec-ui/"
+    ports: 
+      - "8081:80"
+  algspec-api:
+    build: "./api/"
+    ports: 
+      - "8080:8080"
