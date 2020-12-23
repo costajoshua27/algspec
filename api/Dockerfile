@@ -9,4 +9,4 @@ RUN npm install
 # Add the rest of the source files, set the port and serve requests once a container is ran
 ADD . .
 ENV PORT=8080
-CMD npm run server
+CMD npm run serve
