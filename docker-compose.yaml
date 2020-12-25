@@ -5,6 +5,9 @@ services:
     ports: 
       - "8081:80"
   algspec-api:
-    build: "./api/"
+    build: 
+      context: "./api/"
+      args:
+        - DB_URI=${DB_URI}
     ports: 
       - "8080:8080"
