@@ -20,7 +20,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ extended: true }));
 
 // Configure all routers
-
+const algorithmRouter = require('./routes/algorithm');
+app.use('/algorithm', algorithmRouter);
 
 app.get('/', (req, res) => {
   res.json({
