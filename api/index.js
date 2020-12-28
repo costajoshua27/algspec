@@ -1,6 +1,7 @@
 // Require needed libraries for the server
 const express = require('express');
 const http = require('http');
+const cors = require('cors');
 
 // Initialize the server
 const app = express();
@@ -16,12 +17,15 @@ connection.once('open', () => {
 });
 
 // Required middleware
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ extended: true }));
 
 // Configure all routers
 const algorithmRouter = require('./routes/algorithm');
+const tagRouter = require('./routes/tag');
 app.use('/algorithm', algorithmRouter);
+app.use('/tag', tagRouter);
 
 app.get('/', (req, res) => {
   res.json({
