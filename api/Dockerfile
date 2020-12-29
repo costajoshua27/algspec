@@ -1,6 +1,10 @@
 # Grab the base node image
 FROM node:lts-alpine
 
+# Set the necessary environment variables
+ARG DB_URI
+ENV DB_URI=${DB_URI}
+
 # Change our working directory, and install packages
 WORKDIR /app
 ADD package*.json ./

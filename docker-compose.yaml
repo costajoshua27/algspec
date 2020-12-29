@@ -1,10 +1,16 @@
 version: "3.9"
 services:
   algspec-ui:
-    build: "./algspec-ui/"
+    build: 
+      context: "./algspec-ui/"
+      args:
+        - BASE_API_URL=${BASE_API_URL}
     ports: 
       - "8081:80"
   algspec-api:
-    build: "./api/"
+    build: 
+      context: "./api/"
+      args:
+        - DB_URI=${DB_URI}
     ports: 
       - "8080:8080"
