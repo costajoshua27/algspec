@@ -201,7 +201,6 @@
 
 <script>
 import api from '@/config/api';
-import Multiselect from 'vue-multiselect';
 
 const ALGORITHM_FIELDS = [
   'name',
@@ -214,7 +213,7 @@ const ALGORITHM_FIELDS = [
 
 export default {
   name: 'AlgorithmManager',
-  components: { Multiselect },
+  components: {},
   data: function() {
     return {
       algorithms: null,
