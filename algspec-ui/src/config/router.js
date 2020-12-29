@@ -8,6 +8,8 @@ const HelloWorld = () => import('@/components/HelloWorld');
 const Welcome = () => import('@/components/Welcome');
 const AlgorithmManager = () => import('@/components/admin/AlgorithmManager');
 const TagManager = () => import('@/components/admin/TagManager');
+const Algorithms = () => import('@/components/Algorithms');
+const Algorithm = () => import('@/components/Algorithm');
 
 export default new Router({
   mode: 'history',
@@ -28,6 +30,17 @@ export default new Router({
       name: 'HelloWorld',
       component: HelloWorld
     },
+    {
+      path: '/algorithms',
+      name: 'Algorithms',
+      component: Algorithms
+    },
+    {
+      path: '/algorithm/:name',
+      name: 'Algorithm',
+      component: Algorithm,
+      props: true,
+    },
     // Need to check for admin priviledges eventually...
     {
       path: '/admin/algorithm_manager',
@@ -38,6 +51,6 @@ export default new Router({
       path: '/admin/tag_manager',
       name: 'TagManager',
       component: TagManager
-    }
+    },
   ]
 });
