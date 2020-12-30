@@ -22,7 +22,7 @@ export default {
   mounted: async function() {
     try {
       this.algorithm = (await api.get(`/algorithm/${this.name}`)).data;
-      console.log('setting algorithm...'. this.algorithm);
+      console.log('setting algorithm...', this.algorithm);
     } catch (error) {
       console.log('error when mounting components: ', error);
     }

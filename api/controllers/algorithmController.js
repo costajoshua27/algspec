@@ -1,4 +1,5 @@
 const Algorithm = require('../models/algorithm.model');
+const Tag = require('../models/tag.model');
 
 const createAlgorithm = async (req, res) => {
   let {
@@ -77,6 +78,25 @@ const getAllAlgorithms = async (req, res) => {
   }
 };
 
+const getAlgorithmsByTag = async (req, res) => {
+  let {
+    tagName
+  } = req.params;
+
+  try {
+    const tag = await Tag.findOne({ name: tagName }).exec();
+    if(!tag) {
+      res.status(400).send({ message: `Tag with name ${tagName} does not exist` });
+    }
+
+    const foundAlgorithms = await Algorithm.find({ tags: { $all: [tagName] } });
+    return res.status(200).send(foundAlgorithms);
+
+  } catch (error) {
+    return res.status(500).send({ message: `Database error: ${error}` });
+  }
+};
+
 const getAlgorithm = async (req, res) => {
   let {
     name
@@ -100,5 +120,6 @@ module.exports = {
   updateAlgorithm,
   deleteAlgorithm,
   getAllAlgorithms,
+  getAlgorithmsByTag,
   getAlgorithm
 }

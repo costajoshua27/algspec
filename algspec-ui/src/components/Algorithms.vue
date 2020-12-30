@@ -18,14 +18,14 @@ export default {
   },
   data: function() {
     return {
-      tags: null,
+      tags: null, // might not need
       algorithms: null,
     }
   },
   mounted: async function() {
     try {
       this.algorithms = (await api.get('/algorithm/all')).data;
-      this.tags = (await api.get('/tag/all')).data;
+      this.tags = (await api.get('/tag/all')).data; // might not need
       console.log('setting tags...', this.tags);
       console.log('setting algorithms...', this.algorithms);
     } catch (error) {
