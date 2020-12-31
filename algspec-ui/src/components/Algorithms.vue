@@ -2,7 +2,7 @@
   <div>
     <b-container>
       <b-row v-for="tag in tags" :key="tag.name">
-        <b-button @click="addTag(tag); filterOut();">{{ tag.name }}</b-button>
+        <b-button @click="toggleTag(tag); filterOut();">{{ tag.name }}</b-button>
       </b-row>
       <!-- <p>{{ selectedTags}}</p> -->
     </b-container>
@@ -50,7 +50,7 @@ export default {
     }
   },
   methods: {
-    addTag(tag) { // should be toggleTag
+    toggleTag(tag) { // should be toggleTag
       this.selectedTags.has(tag.name) ? this.selectedTags.delete(tag.name) : this.selectedTags.add(tag.name);
     },
     async filterOut() {
