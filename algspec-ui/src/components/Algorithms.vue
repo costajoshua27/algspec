@@ -2,9 +2,9 @@
   <div>
     <b-container>
       <b-row v-for="tag in tags" :key="tag.name">
-        <b-button @click="toggleTag(tag); filterOut();">{{ tag.name }}</b-button>
+        <b-button @click="selectTag(tag)">{{ tag.name }}</b-button>
       </b-row>
-      <!-- <p>{{ selectedTags}}</p> -->
+      <p>{{ displaySelectedTags }}</p>
     </b-container>
     <hr>
     <b-container>
@@ -30,10 +30,11 @@ export default {
       tags: null,
       algorithms: null,
       selectedTags: null,
+      displaySelectedTags: null // remove later
     }
   },
   computed: {
-    shownAlgs: function () {
+    shownAlgs: function() {
       return this.algorithms.filter(alg => alg.show);
     }
   },
@@ -43,6 +44,7 @@ export default {
       this.algorithms.forEach(alg => this.$set(alg, 'show', true)); // adds a new reactive property
       this.tags = (await api.get('/tag/all')).data;
       this.selectedTags = new Set();
+      this.displaySelectedTags = Array.from(this.selectedTags);
       console.log('setting tags...', this.tags);
       console.log('setting algorithms...', this.algorithms);
     } catch (error) {
@@ -52,15 +54,23 @@ export default {
   methods: {
     toggleTag(tag) { // should be toggleTag
       this.selectedTags.has(tag.name) ? this.selectedTags.delete(tag.name) : this.selectedTags.add(tag.name);
+      this.displaySelectedTags = Array.from(this.selectedTags);
     },
-    async filterOut() {
-      const specifiedAlgs = [];
-      for (const tagName of this.selectedTags) {
-        const a = (await api.get(`/algorithm/tag/${tagName}`)).data;
-        specifiedAlgs.push(...a.map(alg=>alg.name));
+    async filterAlgorithms() {
+      if (this.selectedTags.size > 0){
+        let tagParams = [...this.selectedTags].reduce( (acc, elem, index ) => !index ? acc += elem : acc += `,${elem}`, '');
+        const specifiedAlgs = (await api.get(`/algorithm/tags/${tagParams}`)).data;
+        const algNames = specifiedAlgs.map(alg => alg.name);
+        const selectedAlgs = new Set(algNames);
+        this.algorithms.forEach(alg => selectedAlgs.has(alg.name) ? alg.show = true : alg.show = false);
       }
-      const selectedAlgs = new Set(specifiedAlgs);
-      this.algorithms.forEach(alg => selectedAlgs.has(alg.name) ? alg.show = true : alg.show = false);
+      else {
+        this.algorithms.forEach(alg => alg.show = true);
+      }
+    },
+    selectTag(tag) {
+      this.toggleTag(tag);
+      this.filterAlgorithms();
     }
   }
 };

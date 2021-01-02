@@ -84,6 +84,7 @@ const getAlgorithmsByTag = async (req, res) => {
   } = req.params;
 
   try {
+    // tagName is a string, need to .split()
     const tag = await Tag.findOne({ name: tagName }).exec();
     if(!tag) {
       res.status(400).send({ message: `Tag with name ${tagName} does not exist` });
@@ -95,6 +96,22 @@ const getAlgorithmsByTag = async (req, res) => {
   } catch (error) {
     return res.status(500).send({ message: `Database error: ${error}` });
   }
+};
+
+const getAlgorithmsByTags = async (req, res) => {
+  let {
+    tagNames
+  } = req.params;
+
+  try {
+    const allTagNames = tagNames.split(',');
+    const selectedAlgorithms = await Algorithm.find({ tags: { $all: allTagNames  } }); //algs must have all tags
+    return res.status(200).send(selectedAlgorithms);
+
+  } catch (error) {
+    return res.status(500).send({ message: `Database error: ${error}` });
+  }
+
 };
 
 const getAlgorithm = async (req, res) => {
@@ -121,5 +138,6 @@ module.exports = {
   deleteAlgorithm,
   getAllAlgorithms,
   getAlgorithmsByTag,
+  getAlgorithmsByTags,
   getAlgorithm
 }
