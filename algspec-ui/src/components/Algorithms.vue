@@ -30,7 +30,7 @@ export default {
       tags: null,
       algorithms: null,
       selectedTags: null,
-      displaySelectedTags: null // remove later
+      displaySelectedTags: null
     }
   },
   computed: {
@@ -58,7 +58,13 @@ export default {
     },
     async filterAlgorithms() {
       if (this.selectedTags.size > 0){
-        let tagParams = [...this.selectedTags].reduce( (acc, elem, index ) => !index ? acc += elem : acc += `,${elem}`, '');
+        let tagParams = [...this.selectedTags].reduce((acc, elem, index) => {
+          if (index === 0) {
+            return acc += elem;
+          } else {
+            return acc += `,${elem}`;
+          }
+        }, '');
         const specifiedAlgs = (await api.get(`/algorithm/tags/${tagParams}`)).data;
         const algNames = specifiedAlgs.map(alg => alg.name);
         const selectedAlgs = new Set(algNames);
