@@ -12,6 +12,8 @@ const Algorithms        = () => import('@/components/Algorithms');
 const Algorithm         = () => import('@/components/Algorithm');
 const Tags              = () => import('@/components/Tags');
 const Tag               = () => import('@/components/Tag');
+const Login             = () => import('@/components/Login');
+const Register          = () => import('@/components/Register');
 
 export default new Router({
   mode: 'history',
@@ -26,6 +28,17 @@ export default new Router({
       path: '/welcome',
       name: 'Welcome',
       component: Welcome
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      component: Login,
+      props: true
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      component: Register
     },
     {
       path: '/helloworld',

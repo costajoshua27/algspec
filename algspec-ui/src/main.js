@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import router from '@/config/router';
+import store from '@/store';
 import App from '@/App';
 
 // Import all the components/plugins needed from bootstrap-vue
@@ -12,6 +13,10 @@ import {
   FormInputPlugin,
   OverlayPlugin,
   ButtonPlugin,
+  FormPlugin,
+  FormGroupPlugin,
+  AlertPlugin,
+  SpinnerPlugin
 } from 'bootstrap-vue';
 import Multiselect from 'vue-multiselect';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -29,10 +34,15 @@ Vue.use(NavbarPlugin);
 Vue.use(FormInputPlugin);
 Vue.use(OverlayPlugin);
 Vue.use(ButtonPlugin);
+Vue.use(FormPlugin);
+Vue.use(FormGroupPlugin);
+Vue.use(AlertPlugin);
+Vue.use(SpinnerPlugin);
 
 Vue.config.productionTip = false;
 
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app');

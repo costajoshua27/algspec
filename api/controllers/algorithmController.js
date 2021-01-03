@@ -41,7 +41,9 @@ const updateAlgorithm = async (req, res) => {
       return createAlgorithm(req, res);
     }
 
-    const updatedAlg = await Algorithm.findByIdAndUpdate(alg.id, { name, tags, introduction, overview, pseudocode, solutions }, { new: true });
+    const updatedAlg = await Algorithm.findByIdAndUpdate(alg.id, 
+                            { name, tags, introduction, overview, pseudocode, solutions }, 
+                            { new: true }).exec();
     return res.status(200).send(updatedAlg);
 
   } catch (error) {
@@ -61,7 +63,7 @@ const deleteAlgorithm = async (req, res) => {
       res.status(400).send({ message: `Algorithm with name ${name} does not exist` });
     }
 
-    const deletedAlg = await Algorithm.findByIdAndDelete(alg.id);
+    const deletedAlg = await Algorithm.findByIdAndDelete(alg.id).exec();
     return res.status(200).send(deletedAlg);
 
   } catch (error) {
@@ -71,7 +73,7 @@ const deleteAlgorithm = async (req, res) => {
 
 const getAllAlgorithms = async (req, res) => {
   try {
-    const allAlgs = await Algorithm.find({});
+    const allAlgs = await Algorithm.find({}).exec();
     return res.status(200).send(allAlgs);
   } catch (error) {
     return res.status(500).send({ message: `Database error: ${error}` });

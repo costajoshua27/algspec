@@ -16,7 +16,7 @@ const algorithmSchema = new Schema({
   // },
   pseudocode: String,
   solutions: [ String ]
-});
+}, { timestamps: true });
 
 const Algorithm = mongoose.model('Algorithm', algorithmSchema);
 
