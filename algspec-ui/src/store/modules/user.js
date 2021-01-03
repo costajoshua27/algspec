@@ -1,5 +1,5 @@
 const state = {
-  register: false,
+  username: '',
 };
 
 const mutations = {

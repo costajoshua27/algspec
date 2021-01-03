@@ -4,11 +4,19 @@
 
     <!-- Alert(s) -->
     <b-alert
-      :show="alertShow"
-      :variant="alertVariant"
+      :show="initAlertMessage !== ''"
+      :variant="initAlertVariant"
       dismissible
     >
-      {{ alertMessage }}
+      {{ initAlertMessage }}
+    </b-alert>
+
+    <b-alert
+      :show="loginErrorShow"
+      variant="danger"
+      dismissible
+    >
+      {{ loginErrorMessage }}
     </b-alert>
 
     <b-form @submit="sendLoginRequest">
@@ -56,13 +64,14 @@
         ></b-form-input>
       </b-form-group>
 
-      <!-- Submit button -->
+      <!-- Login button -->
       <b-button
         type="submit"
         variant="primary"
         :disabled="!emailValid || !passwordValid"
       >
-        Submit
+        <b-spinner v-if="loginBusy" small></b-spinner>
+        <p v-else>Login</p>
       </b-button>
     </b-form>
 
@@ -73,10 +82,22 @@
 </template>
 
 <script>
-// import api from '@/config/api';
+import api from '@/config/api';
+import { createNamespacedHelpers } from 'vuex';
+const { mapState } = createNamespacedHelpers('users');
 
 export default {
   name: 'Login',
+  props: {
+    initAlertMessage: {
+      default: '',
+      type: String
+    },
+    initAlertVariant: {
+      default: 'success',
+      type: String
+    }
+  },
   computed: {
     emailValid: function() {
       if (this.email === null) {
@@ -107,7 +128,8 @@ export default {
       } else {
         return 'Please enter a password';
       }
-    }
+    },
+    ...mapState(['username'])
   },
   data: function() {
     return {
@@ -115,25 +137,31 @@ export default {
       emailRegExp: /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
       password: null,
 
-      alertShow: false,
-      alertVariant: null,
-      alertMessage: null,
+      loginBusy: false,
+      loginErrorMessage: '',
+      loginErrorShow: false,
     };
   },
   methods: {
+    clearForm() {
+      this.email = null;
+      this.password = null;
+    },
     async sendLoginRequest(event) {
       event.preventDefault();
-      if (this.emailValid && this.passwordValid) {
-        try {
-          // await api.post('/user/login', { email, password }); 
-          alert(JSON.stringify({ email: this.email, password: this.password }));
-        } catch (error) {
-          console.log('an error occured trying to login...', error);
+      try {
+        this.loginBusy = true;
+        const user = await api.post('/user/login', { email: this.email, password: this.password });
+        this.username = user.username;
+        this.$router.push({ name: 'Welcome' });
+      } catch (error) {
+        if (error.response.data.message) {
+          this.loginErrorMessage = error.response.data.message;
+          this.loginErrorShow = true;
         }
-      } else {
-        this.alertShow = true;
-        this.alertVariant = 'danger';
-        this.alertMessage = 'E-mail and Password must be valid';
+      } finally {
+        this.clearForm();
+        this.loginBusy = false;
       }
     }
   }

@@ -4,11 +4,11 @@
 
     <!-- Alert(s) -->
     <b-alert
-      :show="alertShow"
-      :variant="alertVariant"
+      :show="registerErrorShow"
+      variant="danger"
       dismissible
     >
-      {{ alertMessage }}
+      {{ registerErrorMessage }}
     </b-alert>
 
     <b-form @submit="sendRegisterRequest">
@@ -100,13 +100,14 @@
         ></b-form-input>
       </b-form-group>
 
-      <!-- Submit button -->
+      <!-- Register button -->
       <b-button 
         type="submit"
         variant="primary"
         :disabled="!emailValid || !usernameValid || !passwordValid || !confirmPasswordValid"
       >
-        Register
+        <b-spinner v-if="registerBusy" small></b-spinner>
+        <p v-else>Register</p>
       </b-button>
     </b-form>
 
@@ -117,7 +118,7 @@
 </template>
 
 <script>
-// import api from '@/config/api';
+import api from '@/config/api';
 
 export default {
   name: 'Login',
@@ -191,19 +192,32 @@ export default {
       password: null,
       confirmPassword: null,
 
-      alertShow: false,
-      alertVariant: null,
-      alertMessage: null,
+      registerBusy: false,
+      registerErrorMessage: '',
+      registerErrorShow: false
     };
   },
   methods: {
+    clearForm() {
+      this.email = null;
+      this.username = null;
+      this.password = null;
+      this.confirmPassword = null;
+    },
     async sendRegisterRequest(event) {
       event.preventDefault();
       try {
-        // await api.post('/user/login', { email, password }); 
-        alert(JSON.stringify({ email: this.email, username: this.username, password: this.password, confirmPassword: this.confirmPassword }));
+        this.registerBusy = true;
+        await api.post('/user/register', { email: this.email, username: this.username, password: this.password }); 
+        this.$router.push({ name: 'Login', params: { initAlertMessage: 'New account successfully created!' } });
       } catch (error) {
-        console.log('an error occured trying to login...', error);
+        if (error.response.data.message) {
+          this.registerErrorMessage = error.response.data.message;
+          this.registerErrorShow = true;
+        }
+      } finally {
+        this.clearForm();
+        this.registerBusy = false;
       }
     }
   }

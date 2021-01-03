@@ -15,7 +15,8 @@ import {
   ButtonPlugin,
   FormPlugin,
   FormGroupPlugin,
-  AlertPlugin
+  AlertPlugin,
+  SpinnerPlugin
 } from 'bootstrap-vue';
 import Multiselect from 'vue-multiselect';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -34,6 +35,7 @@ Vue.use(ButtonPlugin);
 Vue.use(FormPlugin);
 Vue.use(FormGroupPlugin);
 Vue.use(AlertPlugin);
+Vue.use(SpinnerPlugin);
 
 Vue.config.productionTip = false;
 
