@@ -10,6 +10,8 @@ const AlgorithmManager  = () => import('@/components/admin/AlgorithmManager');
 const TagManager        = () => import('@/components/admin/TagManager');
 const Algorithms        = () => import('@/components/Algorithms');
 const Algorithm         = () => import('@/components/Algorithm');
+const Tags              = () => import('@/components/Tags');
+const Tag               = () => import('@/components/Tag');
 const Login             = () => import('@/components/Login');
 const Register          = () => import('@/components/Register');
 
@@ -53,6 +55,17 @@ export default new Router({
       name: 'Algorithm',
       component: Algorithm,
       props: true,
+    },
+    {
+      path: '/tags',
+      name: 'Tags',
+      component: Tags
+    },
+    {
+      path: '/tag/:name',
+      name: 'Tag',
+      component: Tag,
+      props: true
     },
     // Need to check for admin priviledges eventually...
     {
