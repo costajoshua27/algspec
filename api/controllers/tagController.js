@@ -32,11 +32,11 @@ const updateTag = async (req, res) => {
     // Save the original tag name
     const originalName = tag.name;
 
-    const updatedTag = await Tag.findByIdAndUpdate(tag.id, { name }, { new: true });
+    const updatedTag = await Tag.findByIdAndUpdate(tag.id, { name }, { new: true }).exec();
 
     // Change the tags within all algorithms that have this tag
     if (updatedTag.name !== originalName) {
-      const algorithmsWithTag = await Algorithm.find({ tags: { $all: [originalName] } });
+      const algorithmsWithTag = await Algorithm.find({ tags: { $all: [originalName] } }).exec();
       console.log(`found algs: ${algorithmsWithTag}`);
       for (let alg of algorithmsWithTag) {
         console.log(alg.name, alg.tags);
@@ -69,10 +69,10 @@ const deleteTag = async (req, res) => {
     // Save the original tag name
     const originalName = tag.name;
 
-    const deletedTag = await Tag.findByIdAndDelete(tag.id);
+    const deletedTag = await Tag.findByIdAndDelete(tag.id).exec();
 
     // Remove the tags within all algorithms that have this tag
-    const algorithmsWithTag = await Algorithm.find({ tags: { $all: [originalName] } });
+    const algorithmsWithTag = await Algorithm.find({ tags: { $all: [originalName] } }).exec();
     console.log(`found algs: ${algorithmsWithTag}`);
     for (let alg of algorithmsWithTag) {
       alg.tags = alg.tags.filter(val => val !== originalName);
@@ -89,7 +89,7 @@ const deleteTag = async (req, res) => {
 
 const getAllTags = async (req, res) => {
   try {
-    const allTags = await Tag.find({});
+    const allTags = await Tag.find({}).exec();
     return res.status(200).send(allTags);
   } catch (error) {
     return res.status(500).send({ message: `Database error: ${error}` });

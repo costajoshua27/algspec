@@ -12,5 +12,6 @@ services:
       context: "./api/"
       args:
         - DB_URI=${DB_URI}
+        - SESSION_SECRET=${SESSION_SECRET}
     ports: 
       - "8080:8080"
