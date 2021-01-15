@@ -78,6 +78,7 @@ const login = (req, res) => {
 
 const logout = async (req, res) => {
   req.logout();
+  req.session.destroy();
   return res.status(200).send({ message: 'Successfully logged out' }); 
 };
 

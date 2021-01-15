@@ -1,12 +1,23 @@
 <template>
   <div>
-    Hello there!!!!!!!
+    isAuthenticated: {{ isAuthenticated }}
+    <br>
+    user: {{ JSON.stringify(user) }}
   </div>
 </template>
 
 <script>
+import { createNamespacedHelpers } from 'vuex';
+const { mapState } = createNamespacedHelpers('user');
+
 export default {
-  name: 'Welcome'
+  name: 'Welcome',
+  computed: {
+    ...mapState({
+      isAuthenticated: state => state.isAuthenticated,
+      user: state => state.user
+    })
+  }
 }
 </script>
 
