@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
+import store from '@/store';
 
 Vue.use(Router);
 
@@ -18,15 +19,18 @@ const Register          = () => import('@/components/Register');
 // Get the necessary data from the store to use in navigation guards
 
 const requireAuthenticated = (to, from, next) => {
-  if (!localStorage.getItem('user')) {
-    next({ name: 'Login' });
+  if (!(store.state.user.isAuthenticated)) {
+    next({ name: 'Login', params: { 
+      initAlertMessage: 'You must be authenticated to access this resource', 
+      initAlertVariant: 'danger'
+    }});
   } else {
     next();
   }
 };
 
 const checkAlreadyAuthenticated = (to, from, next) => {
-  if (localStorage.getItem('user')) {
+  if (store.state.user.isAuthenticated) {
     next({ name: 'Welcome' });
   } else {
     next();

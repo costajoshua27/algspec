@@ -1,10 +1,10 @@
 import api from '@/config/api';
 
-const user = JSON.parse(localStorage.getItem('user'));
 const state = { 
-  user: user ? user : null,
-  isAuthenticated: !!user,
+  user: null,
+  isAuthenticated: false,
   loggingIn: false,
+  registering: false,
   loginError: '',
   registerError: ''
 };
@@ -13,19 +13,33 @@ const getters = {
 };
 
 const mutations = {
-  registerFailure(state, errorMsg) {
-    state.registerError = errorMsg;
+  setUser(state, user) {
+    state.user = user;
+  },
+  setIsAuthenticated(state, isAuthenticated) {
+    state.isAuthenticated = isAuthenticated;
+  },
+  registering(state) {
+    state.registering = true;
+    state.registerError = '';
   },
   loggingIn(state) {
     state.loggingIn = true;
     state.loginError = '';
   },
+  registerSuccess(state) {
+    state.registering = false;
+    state.registerError = '';
+  },
+  registerFailure(state, errorMsg) {
+    state.registering = false;
+    state.registerError = errorMsg;
+  },
   loginSuccess(state, user) {
     state.isAuthenticated = true;
     state.user = user;
-    localStorage.setItem('user', JSON.stringify(user));
     state.loginError = '';
-    state.loggingin = false;
+    state.loggingIn = false;
   },
   loginFailure(state, errorMsg) {
     state.isAuthenticated = false;
@@ -40,18 +54,44 @@ const mutations = {
 };
 
 const actions = {
+  register({ commit }, payload) {
+    commit('registering');
+    return new Promise((resolve, reject) => {
+      api.post('user/register', payload)
+        .then(response => {
+          commit('registerSuccess');
+          resolve(response);
+        })
+        .catch(error => {
+          commit('registerFailure', error.response.data.message);
+          reject(error);
+        });
+    });
+  },
   login({ commit }, payload) {
     commit('loggingIn');
     return new Promise((resolve, reject) => {
       api.post('user/login', payload)
         .then(response => {
-          commit('loginSuccess', response.data);
-          resolve();
+          commit('loginSuccess');
+          resolve(response);
         })
         .catch(error => {
           commit('loginFailure', error.response.data.message);
           reject(error);
+        });
+    });
+  },
+  logout({ commit }) {
+    return new Promise((resolve, reject) => {
+      api.post('user/logout')
+        .then(response => {
+          commit('logout');
+          resolve(response.data.message);
         })
+        .catch(error => {
+          reject(error);
+        });
     });
   }
 };

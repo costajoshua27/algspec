@@ -68,7 +68,7 @@
       <b-button
         type="submit"
         variant="primary"
-        :disabled="!emailValid || !passwordValid"
+        :disabled="!emailValid || !passwordValid || loggingIn"
       >
         <b-spinner v-if="loggingIn" small></b-spinner>
         <p v-else>Login</p>

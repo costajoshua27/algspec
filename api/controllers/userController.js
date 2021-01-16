@@ -13,6 +13,10 @@ const me = async (req, res) => {
   }
 };
 
+const isAuthenticated = async (req, res) => {
+  return res.status(200).send({ isAuthenticated: req.isAuthenticated() });
+}
+
 const register = async (req, res) => {
   const {
     username,
@@ -84,6 +88,7 @@ const logout = async (req, res) => {
 
 module.exports = {
   me,
+  isAuthenticated,
   register,
   authenticate,
   login, 

@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import router from '@/config/router';
+import api from '@/config/api';
 import store from '@/store';
 import App from '@/App';
 
@@ -23,8 +24,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import 'vue-multiselect/dist/vue-multiselect.min.css';
 
-
-
 Vue.component('multiselect', Multiselect);
 Vue.use(LayoutPlugin);
 Vue.use(ModalPlugin);
@@ -40,6 +39,31 @@ Vue.use(AlertPlugin);
 Vue.use(SpinnerPlugin);
 
 Vue.config.productionTip = false;
+
+api.get('user/isAuthenticated')
+  .then(response => {
+    if (response.data.isAuthenticated) {
+      api.get('user/me')
+      .then(response => {
+        store.commit('user/setUser', response.data);
+        store.commit('user/setIsAuthenticated', true);
+        store.commit('setGlobalLoading', false);
+        router.push({ name: 'Welcome' });
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    } else {
+      store.commit('setGlobalLoading', false);
+      if (router.currentRoute.name !== 'Login') {
+        router.push({ name: 'Login' });
+      }
+      
+    }
+  })
+  .catch(error => {
+    console.log(error);
+  });
 
 new Vue({
   router,
