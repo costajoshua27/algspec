@@ -6,6 +6,7 @@ const userController = require('../controllers/userController');
 const { ensureAuthenticated } = require('../middlewares/auth');
 
 router.get('/me', ensureAuthenticated, userController.me);
+router.get('/isAuthenticated', userController.isAuthenticated);
 router.post('/register', userController.register);
 router.post('/login', userController.authenticate, userController.login);
 router.post('/logout', userController.logout);

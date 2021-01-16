@@ -34,11 +34,19 @@ const sessionStore = new MongoStore({
 // Required middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json({ extended: true }));
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:8081',
+    'https://localhost:8081'
+  ],
+  credentials: true,
+  exposedHeaders: ['set-cookie']
+}));
 app.use(session({
   secret: process.env.SESSION_SECRET,
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
+  unset: 'destroy',
   store: sessionStore,
   cookie: {
     maxAge: 1000 * 60 * 60 * 24 // Equal to 1 day in milliseconds

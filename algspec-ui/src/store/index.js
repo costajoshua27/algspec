@@ -7,6 +7,14 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   modules: {
     user
+  },
+  state: {
+    globalLoading: true
+  },
+  mutations: {
+    setGlobalLoading(state, globalLoading) {
+      state.globalLoading = globalLoading;
+    }
   }
 });
 

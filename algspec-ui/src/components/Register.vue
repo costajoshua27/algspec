@@ -4,11 +4,11 @@
 
     <!-- Alert(s) -->
     <b-alert
-      :show="registerErrorShow"
+      :show="registerError.length > 0"
       variant="danger"
       dismissible
     >
-      {{ registerErrorMessage }}
+      {{ registerError }}
     </b-alert>
 
     <b-form @submit="sendRegisterRequest">
@@ -104,9 +104,9 @@
       <b-button 
         type="submit"
         variant="primary"
-        :disabled="!emailValid || !usernameValid || !passwordValid || !confirmPasswordValid"
+        :disabled="!emailValid || !usernameValid || !passwordValid || !confirmPasswordValid || registering"
       >
-        <b-spinner v-if="registerBusy" small></b-spinner>
+        <b-spinner v-if="registering" small></b-spinner>
         <p v-else>Register</p>
       </b-button>
     </b-form>
@@ -118,7 +118,8 @@
 </template>
 
 <script>
-import api from '@/config/api';
+import { createNamespacedHelpers } from 'vuex';
+const { mapState, mapActions } = createNamespacedHelpers('user');
 
 export default {
   name: 'Login',
@@ -182,7 +183,11 @@ export default {
       } else {
         return 'Please confirm the password';
       }
-    }
+    },
+    ...mapState({
+      registering: state => state.registering,
+      registerError: state => state.registerError
+    })
   },
   data: function() {
     return {
@@ -191,13 +196,12 @@ export default {
       username: null,
       password: null,
       confirmPassword: null,
-
-      registerBusy: false,
-      registerErrorMessage: '',
-      registerErrorShow: false
     };
   },
   methods: {
+    ...mapActions({
+      register: 'register'
+    }),
     clearForm() {
       this.email = null;
       this.username = null;
@@ -207,17 +211,11 @@ export default {
     async sendRegisterRequest(event) {
       event.preventDefault();
       try {
-        this.registerBusy = true;
-        await api.post('/user/register', { email: this.email, username: this.username, password: this.password }); 
-        this.$router.push({ name: 'Login', params: { initAlertMessage: 'New account successfully created!' } });
+        const response = await this.register({ email: this.email, username: this.username, password: this.password });
+        this.$router.push({ name: 'Login', params: { initAlertMessage: response.data.message } });
       } catch (error) {
-        if (error.response.data.message) {
-          this.registerErrorMessage = error.response.data.message;
-          this.registerErrorShow = true;
-        }
-      } finally {
+        console.log(error);
         this.clearForm();
-        this.registerBusy = false;
       }
     }
   }

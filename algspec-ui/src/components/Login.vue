@@ -12,11 +12,11 @@
     </b-alert>
 
     <b-alert
-      :show="loginErrorShow"
+      :show="loginError.length > 0"
       variant="danger"
       dismissible
     >
-      {{ loginErrorMessage }}
+      {{ loginError }}
     </b-alert>
 
     <b-form @submit="sendLoginRequest">
@@ -68,9 +68,9 @@
       <b-button
         type="submit"
         variant="primary"
-        :disabled="!emailValid || !passwordValid"
+        :disabled="!emailValid || !passwordValid || loggingIn"
       >
-        <b-spinner v-if="loginBusy" small></b-spinner>
+        <b-spinner v-if="loggingIn" small></b-spinner>
         <p v-else>Login</p>
       </b-button>
     </b-form>
@@ -82,9 +82,8 @@
 </template>
 
 <script>
-import api from '@/config/api';
 import { createNamespacedHelpers } from 'vuex';
-const { mapState } = createNamespacedHelpers('users');
+const { mapState, mapActions } = createNamespacedHelpers('user');
 
 export default {
   name: 'Login',
@@ -129,20 +128,22 @@ export default {
         return 'Please enter a password';
       }
     },
-    ...mapState(['username'])
+    ...mapState({
+      loggingIn: state => state.loggingIn,
+      loginError: state => state.loginError
+    })
   },
   data: function() {
     return {
       email: null,
       emailRegExp: /^(([^<>()\]\\.,;:\s@"]+(\.[^<>()\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,24}))$/,
       password: null,
-
-      loginBusy: false,
-      loginErrorMessage: '',
-      loginErrorShow: false,
     };
   },
   methods: {
+    ...mapActions({
+      login: 'login'
+    }),
     clearForm() {
       this.email = null;
       this.password = null;
@@ -150,18 +151,11 @@ export default {
     async sendLoginRequest(event) {
       event.preventDefault();
       try {
-        this.loginBusy = true;
-        const user = await api.post('/user/login', { email: this.email, password: this.password });
-        this.username = user.username;
+        await this.login({ email: this.email, password: this.password });
         this.$router.push({ name: 'Welcome' });
       } catch (error) {
-        if (error.response.data.message) {
-          this.loginErrorMessage = error.response.data.message;
-          this.loginErrorShow = true;
-        }
-      } finally {
+        console.log(error);
         this.clearForm();
-        this.loginBusy = false;
       }
     }
   }
