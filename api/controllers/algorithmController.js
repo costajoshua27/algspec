@@ -7,13 +7,13 @@ const createAlgorithm = async (req, res) => {
     tags,
     introduction,
     overview,
-    // visualizationCode,
+    visualization,
     pseudocode,
     solutions
   } = req.body;
 
   try {
-    const newAlg = new Algorithm({ name, tags, introduction, overview, pseudocode, solutions });
+    const newAlg = new Algorithm({ name, tags, introduction, overview, visualization, pseudocode, solutions });
     await newAlg.save();
     return res.status(200).send(newAlg);
 
@@ -29,7 +29,7 @@ const updateAlgorithm = async (req, res) => {
     tags,
     introduction,
     overview,
-    // visualizationCode,
+    visualization,
     pseudocode,
     solutions
   } = req.body;
@@ -42,7 +42,7 @@ const updateAlgorithm = async (req, res) => {
     }
 
     const updatedAlg = await Algorithm.findByIdAndUpdate(alg.id, 
-                            { name, tags, introduction, overview, pseudocode, solutions }, 
+                            { name, tags, introduction, overview, visualization, pseudocode, solutions }, 
                             { new: true }).exec();
     return res.status(200).send(updatedAlg);
 

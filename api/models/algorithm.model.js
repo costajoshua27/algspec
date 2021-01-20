@@ -10,10 +10,12 @@ const algorithmSchema = new Schema({
   tags: [ String ],
   introduction: String,
   overview: String,
-  // visualizationCode: {
-  //   type: String,
-  //   data: Buffer
-  // },
+  visualization: {
+    entities: [{
+      config: Schema.Types.Mixed,
+      animation: Schema.Types.Mixed
+    }]
+  },
   pseudocode: String,
   solutions: [ String ]
 }, { timestamps: true });

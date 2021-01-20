@@ -34,7 +34,7 @@
       <b-modal
         id="algorithm-editor"
         ref="algorithm-editor"
-        size="lg"
+        size="xl"
         no-close-on-backdrop
       >
         <!-- Modal header -->
@@ -46,7 +46,7 @@
         <b-overlay :show="editorBusy" rounded>
           <b-card>
             <!-- Name -->
-            <b-form-row>
+            <b-form-row class="mb-2">
               <b-col lg="5">
                 <label for="algorithm-name">Name:</label>
               </b-col>
@@ -62,7 +62,7 @@
             </b-form-row>
             
             <!-- Tags -->
-            <b-form-row>
+            <b-form-row class="mb-2">
               <b-col lg="5">
                 <label for="algorithm-tags">Tags:</label>
               </b-col>
@@ -86,7 +86,7 @@
             </b-form-row>
 
             <!-- Introduction -->
-            <b-form-row>
+            <b-form-row class="mb-2">
               <b-col lg="5">
                 <label for="algorithm-intro">Introduction:</label>
               </b-col>
@@ -102,7 +102,7 @@
             </b-form-row>
 
             <!-- Overview -->
-            <b-form-row>
+            <b-form-row class="mb-2">
               <b-col lg="5">
                 <label for="algorithm-overview">Overview:</label>
               </b-col>
@@ -117,8 +117,22 @@
               </b-col>
             </b-form-row>
 
+            <!-- Visualization -->
+            <b-form-row class="mb-2">
+              <b-col lg="5">
+                <label for="visualization">Visualization:</label>
+              </b-col>
+              <b-col lg="7">
+                <JsonEditor
+                  id="visualization"
+                  is-edit="true"
+                  v-model="visualization"
+                ></JsonEditor>
+              </b-col>
+            </b-form-row>
+
             <!-- Pseudocode -->
-            <b-form-row>
+            <b-form-row class="mb-2">
               <b-col lg="5">
                 <label for="algorithm-pseudocode">Pseudocode:</label>
               </b-col>
@@ -134,7 +148,7 @@
             </b-form-row>
 
             <!-- Solutions -->
-            <b-form-row>
+            <b-form-row class="mb-2">
               <b-col lg="5">
                 <label for="algorithm-solutions">Solutions:</label>
               </b-col>
@@ -156,6 +170,7 @@
         <template #modal-footer="{ close }">
           <b-button
             variant="primary"
+            :disabled="name === ''"
             @click="saveAlgorithm(close)"
           >
             Save
@@ -207,13 +222,15 @@ const ALGORITHM_FIELDS = [
   'tags',
   'introduction',
   'overview',
+  'visualization',
   'pseudocode',
   'solutions'
 ];
 
 export default {
   name: 'AlgorithmManager',
-  components: {},
+  components: {
+  },
   data: function() {
     return {
       algorithms: null,
@@ -228,6 +245,7 @@ export default {
       tags: [],
       introduction: '',
       overview: '',
+      visualization: {},
       pseudocode: '',
       solutions: []
     };
@@ -267,6 +285,8 @@ export default {
       for (let field of ALGORITHM_FIELDS) {
         if (field === 'tags' || field === 'solutions') {
           this[field] = [];
+        } else if (field === 'visualization') {
+          this[field] = {}; 
         } else {
           this[field] = '';
         }

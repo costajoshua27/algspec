@@ -1,4 +1,6 @@
 import Vue from 'vue';
+import VueKonva from 'vue-konva';
+import JsonEditor from 'vue-edit-json';
 import router from '@/config/router';
 import api from '@/config/api';
 import store from '@/store';
@@ -39,6 +41,10 @@ Vue.use(AlertPlugin);
 Vue.use(SpinnerPlugin);
 
 Vue.config.productionTip = false;
+
+// Add other plugins
+Vue.use(VueKonva);
+Vue.use(JsonEditor);
 
 api.get('user/isAuthenticated')
   .then(response => {
