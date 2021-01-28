@@ -121,13 +121,34 @@
             <b-form-row class="mb-2">
               <b-col lg="5">
                 <label for="visualization">Visualization:</label>
+                <b-icon-check-circle-fill
+                  v-if="!showModalError"
+                  variant="success"
+                  class="ml-2"
+                ></b-icon-check-circle-fill>
+                <b-icon-exclamation-circle-fill
+                  v-if="showModalError"
+                  id="modal-error"
+                  variant="danger"
+                  class="ml-2"
+                ></b-icon-exclamation-circle-fill>
+                <b-popover
+                  v-if="showModalError"
+                  target="modal-error"
+                  triggers="hover"
+                  placement="right"
+                >
+                  {{ modalErrorMessage }}
+                </b-popover>
               </b-col>
               <b-col lg="7">
-                <JsonEditor
+                <prism-editor
                   id="visualization"
-                  is-edit="true"
+                  class="visualization-editor"
                   v-model="visualization"
-                ></JsonEditor>
+                  :highlight="highlighter"
+                  line-numbers
+                ></prism-editor>
               </b-col>
             </b-form-row>
 
@@ -170,7 +191,7 @@
         <template #modal-footer="{ close }">
           <b-button
             variant="primary"
-            :disabled="name === ''"
+            :disabled="name === '' || !visualizationIsValid()"
             @click="saveAlgorithm(close)"
           >
             Save
@@ -216,6 +237,12 @@
 
 <script>
 import api from '@/config/api';
+import { PrismEditor } from 'vue-prism-editor';
+import 'vue-prism-editor/dist/prismeditor.min.css';
+
+import { highlight, languages } from 'prismjs/components/prism-core';
+import 'prismjs/components/prism-json';
+import 'prismjs/themes/prism-tomorrow.css';
 
 const ALGORITHM_FIELDS = [
   'name',
@@ -230,6 +257,9 @@ const ALGORITHM_FIELDS = [
 export default {
   name: 'AlgorithmManager',
   components: {
+    PrismEditor
+  },
+  computed: {
   },
   data: function() {
     return {
@@ -240,12 +270,14 @@ export default {
       editorHeader: 'Creating algorithm',
       editorCreate: true,
       editorBusy: false,
+      showModalError: false,
+      modalErrorMessage: '',
 
       name: '',
       tags: [],
       introduction: '',
       overview: '',
-      visualization: {},
+      visualization: '',
       pseudocode: '',
       solutions: []
     };
@@ -270,12 +302,35 @@ export default {
     }
   },
   methods: {
+    highlighter(code) {
+      return highlight(code, languages.json);
+    },
+    visualizationIsValid() {
+      if (this.visualization === '') {
+        this.showModalError = true;
+        this.modalErrorMessage = 'Please provide a visualization configuration object';
+        return false;
+      }
+
+      try {
+        JSON.parse(this.visualization);
+        this.showModalError = false;
+        return true;
+
+      } catch (error) {
+        this.showModalError = true;
+        this.modalErrorMessage = 'Visualization configuration in not valid JSON';
+        return false;
+      }
+    },
     loadAlgorithmData() {
       for (let field of ALGORITHM_FIELDS) {
         if (field === 'tags') {
           this[field] = this.selectedAlgorithm[field].map(name => {
             return { name };
           });
+        } else if (field === 'visualization') { 
+          this[field] = JSON.stringify(this.selectedAlgorithm[field], null, 2);
         } else {
           this[field] = this.selectedAlgorithm[field];
         }
@@ -286,7 +341,7 @@ export default {
         if (field === 'tags' || field === 'solutions') {
           this[field] = [];
         } else if (field === 'visualization') {
-          this[field] = {}; 
+          this[field] = ''; 
         } else {
           this[field] = '';
         }
@@ -314,6 +369,8 @@ export default {
         for (let field of ALGORITHM_FIELDS) {
           if (field === 'tags') {
             payload[field] = this[field].map(obj => obj.name);
+          } else if (field === 'visualization') {
+            payload[field] = JSON.parse(this[field]);
           } else {
             payload[field] = this[field]; 
           }
@@ -380,11 +437,20 @@ export default {
     unconfirmDeleteAlgorithm(close) {
       close();
     }
-
   }
 };
 </script>
 
 <style scoped>
-
+.visualization-editor {
+    /* we dont use `language-` classes anymore so thats why we need to add background and text color manually */
+    background: #2d2d2d;
+    color: #ccc;
+ 
+    /* you must provide font-family font-size line-height. Example: */
+    font-family: Fira code, Fira Mono, Consolas, Menlo, Courier, monospace;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 5px;
+  }
 </style>

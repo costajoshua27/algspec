@@ -1,5 +1,5 @@
-const Algorithm = require('../models/algorithm.model');
-const Tag = require('../models/tag.model');
+const { Algorithm } = require('../models/algorithm.model');
+const { Tag } = require('../models/tag.model');
 
 const createAlgorithm = async (req, res) => {
   let {

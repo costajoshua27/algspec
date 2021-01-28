@@ -12,8 +12,10 @@ const algorithmSchema = new Schema({
   overview: String,
   visualization: {
     entities: [{
-      config: Schema.Types.Mixed,
-      animation: Schema.Types.Mixed
+      _id: false,
+      entityType: String,
+      config: { type: Schema.Types.Mixed, _id: false },
+      animation: { type: Schema.Types.Mixed, _id: false }
     }]
   },
   pseudocode: String,
@@ -22,4 +24,4 @@ const algorithmSchema = new Schema({
 
 const Algorithm = mongoose.model('Algorithm', algorithmSchema);
 
-module.exports = Algorithm;
+module.exports = { Algorithm, algorithmSchema };

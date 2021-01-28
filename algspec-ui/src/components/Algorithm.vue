@@ -3,9 +3,10 @@
     <p>name: {{ algorithm.name }}</p> 
     <p>introduction: {{ algorithm.introduction }}</p>
     <p>overview: {{ algorithm.overview }}</p>
+    <!-- Dis needs to change bruh -->
     <Visualization 
-      :stageConfig="{ height: 300, width: 300 }"
-      :circleConfig="{ x: 100, y: 100, radius: 70, fill: 'red', stroke: 'black', strokeWidth: 4, draggable: true}"
+      :stageConfig="{ height: 1000, width: 1000 }"
+      :entities="algorithm.visualization.entities" 
     ></Visualization>
   </div>
 </template>
@@ -29,8 +30,9 @@ export default {
   },
   mounted: async function() {
     try {
+      // Get the algorithm data
       this.algorithm = (await api.get(`/algorithm/${this.name}`)).data;
-      console.log('setting algorithm...', this.algorithm);
+
     } catch (error) {
       console.log('error when mounting components: ', error);
     }

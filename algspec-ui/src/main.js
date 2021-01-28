@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import VueKonva from 'vue-konva';
-import JsonEditor from 'vue-edit-json';
 import router from '@/config/router';
 import api from '@/config/api';
 import store from '@/store';
@@ -19,7 +18,11 @@ import {
   FormPlugin,
   FormGroupPlugin,
   AlertPlugin,
-  SpinnerPlugin
+  SpinnerPlugin,
+  PopoverPlugin,
+  BIcon,
+  BIconExclamationCircleFill,
+  BIconCheckCircleFill
 } from 'bootstrap-vue';
 import Multiselect from 'vue-multiselect';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -39,12 +42,15 @@ Vue.use(FormPlugin);
 Vue.use(FormGroupPlugin);
 Vue.use(AlertPlugin);
 Vue.use(SpinnerPlugin);
+Vue.use(PopoverPlugin);
+Vue.component('BIcon', BIcon);
+Vue.component('BIconExclamationCircleFill', BIconExclamationCircleFill);
+Vue.component('BIconCheckCircleFill', BIconCheckCircleFill);
 
 Vue.config.productionTip = false;
 
 // Add other plugins
 Vue.use(VueKonva);
-Vue.use(JsonEditor);
 
 api.get('user/isAuthenticated')
   .then(response => {
