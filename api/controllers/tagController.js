@@ -63,7 +63,7 @@ const deleteTag = async (req, res) => {
     // First check if the tag doesn't exist, if so, return 400
     const tag = await Tag.findOne({ name }).exec();
     if (!tag) {
-      res.status(400).send({ message: `Tag with name ${name} does not exist` });
+      return res.status(400).send({ message: `Tag with name ${name} does not exist` });
     }
 
     // Save the original tag name
@@ -87,15 +87,6 @@ const deleteTag = async (req, res) => {
   }
 };
 
-const getAllTags = async (req, res) => {
-  try {
-    const allTags = await Tag.find({}).exec();
-    return res.status(200).send(allTags);
-  } catch (error) {
-    return res.status(500).send({ message: `Database error: ${error}` });
-  }
-};
-
 const getTag = async (req, res) => {
   let {
     name
@@ -104,7 +95,7 @@ const getTag = async (req, res) => {
   try {
     const tag = await Tag.findOne({ name }).exec();
     if (!tag) {
-      res.status(400).send({ message: `Tag with name ${name} does not exist` });
+      return res.status(400).send({ message: `Tag with name ${name} does not exist` });
     }
 
     return res.status(200).send(tag);
@@ -114,10 +105,19 @@ const getTag = async (req, res) => {
   }
 };
 
+const getAllTags = async (req, res) => {
+  try {
+    const allTags = await Tag.find({}).exec();
+    return res.status(200).send(allTags);
+  } catch (error) {
+    return res.status(500).send({ message: `Database error: ${error}` });
+  }
+};
+
 module.exports = {
   createTag,
   updateTag,
   deleteTag,
-  getAllTags,
-  getTag
+  getTag,
+  getAllTags
 };

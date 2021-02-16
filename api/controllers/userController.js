@@ -14,6 +14,26 @@ const isAuthenticated = async (req, res) => {
   return res.status(200).send({ isAuthenticated: req.isAuthenticated() });
 }
 
+const authenticate = (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      req.flash('error', `An internal error occurred: ${err}`);
+      return next();
+    }
+    if (!user) {
+      console.log(info); 
+      req.flash('unauthorized', info.message);
+      return next();
+    }
+    req.logIn(user, (err) => {
+      if (err) { 
+        req.flash('error', `An internal error occurred: ${err}`);
+      }
+      return next();
+    });
+  })(req, res, next);
+};
+
 const register = async (req, res) => {
   const {
     username,
@@ -45,7 +65,9 @@ const register = async (req, res) => {
       currentExperience: 0,
       algorithmsLearned: [],
       achievementsEarned: [],
-      preferences: {}
+      preferences: {
+        theme: 'light'
+      }
     });
     await newUser.save();
 
@@ -56,35 +78,18 @@ const register = async (req, res) => {
   }
 };
 
-const authenticate = (req, res, next) => {
-  passport.authenticate('local', (err, user, info) => {
-    if (err) {
-      req.flash('error', `An internal error occurred: ${err}`);
-      return next();
-    }
-    if (!user) {
-      console.log(info); 
-      req.flash('unauthorized', info.message);
-      return next();
-    }
-    req.logIn(user, (err) => {
-      if (err) { 
-        req.flash('error', `An internal error occurred: ${err}`);
-      }
-      return next();
-    });
-  })(req, res, next);
-}
-
 const login = (req, res) => {
   const errorFlash = req.flash('error');
   const unauthFlash = req.flash('unauthorized');
+
   if (errorFlash.length > 0) {
     return res.status(500).send({ message: errorFlash[0] });
   }
   if (unauthFlash.length > 0) {
     return res.status(400).send({ message: unauthFlash[0] });
   } 
+
+  // Save the user in the session
   req.session.user = req.user;
   return res.status(200).send(req.session.user);
 };
@@ -120,30 +125,15 @@ const finishAlgorithm = async (req, res) => {
   }
 };
 
-const createLevel = async (req, res) => {
-  const {
-    number,
-    experienceNeeded
-  } = req.body;
-  try {
-    const newLevel = new Level({
-      number,
-      experienceNeeded
-    });
-    newLevel.save();
-    return res.status(200).send(newLevel);
-  } catch (error) {
-    return res.status(500).send({ message: `Database error: ${error}` });
-  }
-};
-
-
 module.exports = {
+  // Auth
   me,
   isAuthenticated,
-  register,
   authenticate,
+  register,
   login, 
   logout,
-  createLevel
+
+  // Algorithm-related
+  finishAlgorithm,
 };

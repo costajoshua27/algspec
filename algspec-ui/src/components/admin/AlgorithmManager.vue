@@ -423,9 +423,6 @@ export default {
     async confirmDeleteAlgorithm(close) {
       try {
         await this.deleteAlgorithm();
-        // Reload all of the algorithm data to refresh the list
-        this.algorithms = (await api.get('/algorithm/all')).data;
-        console.log('setting algorithms...', this.algorithms);
 
       } catch (error) {
         console.log('error when deleting algorithm data: ', error);

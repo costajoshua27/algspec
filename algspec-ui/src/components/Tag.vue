@@ -29,7 +29,7 @@ export default {
   mounted: async function() {
     try {
       this.tag = (await api.get(`/tag/${this.name}`)).data;
-      this.algorithms = (await api.get(`/algorithm/tag/${this.name}`)).data;
+      this.algorithms = (await api.get(`/algorithm/tags/${this.name}`)).data;
       console.log('setting found algorithms...', this.algorithms);
     } catch(error) {
       console.log('error when mounting components: ', error);
