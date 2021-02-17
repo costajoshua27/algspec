@@ -1,8 +1,8 @@
 <template>
   <b-container fluid>
     <b-row align-h = "center" align-v = "center">
-      <b-col s="0" m="6"> </b-col>
-      <b-col s="12" m="6" class = "register-column">
+      <b-col sm="0" md="6">HELLO</b-col>
+      <b-col sm="12" md="6" class="register-column d-flex align-items-center justify-content-center">
         <b-card class="p-3 m-3 card-style"
          title = "algspec1">
           <!-- <h3 class="ml-auto">algspec</h3> -->
@@ -16,7 +16,7 @@
             {{ registerError }}
           </b-alert>
 
-          <b-form @submit="sendRegisterRequest">
+          <b-form @submit="sendRegisterRequest" class="form-style d-flex flex-column justify-content-between">
             <!-- E-mail -->
             <b-form-group
               id="email-group"
@@ -33,6 +33,7 @@
               <b-form-input
                 type="email"
                 id="email-field"
+                class = "input-style"
                 v-model="email"
                 :state="emailValid"
                 size="sm"
@@ -55,6 +56,7 @@
               <b-form-input
                 type="text"
                 id="username-field"
+                class = "input-style"
                 v-model="username"
                 :state="usernameValid"
                 size="sm"
@@ -76,6 +78,7 @@
             >
               <b-form-input
                 id="password-field"
+                class = "input-style"
                 v-model="password"
                 :state="passwordValid"
                 type="password"
@@ -98,6 +101,7 @@
             >
               <b-form-input
                 id="confirm-password-field"
+                class = "input-style"
                 v-model="confirmPassword"
                 :state="confirmPasswordValid"
                 type="password"
@@ -217,6 +221,7 @@ export default {
       username: null,
       password: null,
       confirmPassword: null,
+      // windowWidth: null,  // For a possible dynamic rendoring method, may not need, will comment for now
     };
   },
   methods: {
@@ -246,7 +251,18 @@ export default {
         this.clearForm();
       }
     },
+    // For a possible dynamic rendoring method, may not need, will comment for now
+    // widthTracker() {
+    //   this.windowWidth = window.innerWidth;
+    // }
   },
+  // For a possible dynamic rendoring method, may not need, will comment for now
+  // mounted() {
+  //   window.addEventListener('resize', this.widthTracker)
+  // },
+  // beforeDestroy() {
+  //    window.removeEventListener('resize', widthTracker)
+  // },
 };
 </script>
 
