@@ -4,7 +4,7 @@
       <b-col sm="0" md="6">HELLO</b-col>
       <b-col sm="12" md="6" class="register-column d-flex align-items-center justify-content-center">
         <b-card class="p-3 m-3 card-style"
-         title = "algspec1">
+         title = "algspec">
           <!-- <h3 class="ml-auto">algspec</h3> -->
 
           <!-- Alert(s) -->
@@ -16,7 +16,7 @@
             {{ registerError }}
           </b-alert>
 
-          <b-form @submit="sendRegisterRequest" class="form-style d-flex flex-column justify-content-between">
+          <b-form @submit="sendRegisterRequest" class="form-style d-flex flex-column justify-content-between no-gutters">
             <!-- E-mail -->
             <b-form-group
               id="email-group"
@@ -108,28 +108,30 @@
                 size="sm"
               ></b-form-input>
             </b-form-group>
-
+            
             <!-- Register button -->
-            <b-button
-              type="submit"
-              variant="primary"
-              :disabled="
-                !emailValid ||
-                !usernameValid ||
-                !passwordValid ||
-                !confirmPasswordValid ||
-                registering
-              "
+            <div class="button-wrapper">
+              <b-button
+                type="submit"
+                variant="primary"
+                :disabled="
+                  !emailValid ||
+                  !usernameValid ||
+                  !passwordValid ||
+                  !confirmPasswordValid ||
+                  registering
+                "
+              >
+                <b-spinner v-if="registering" small></b-spinner>
+                <p v-else>Register</p>
+              </b-button>
+            </div>
+            
+                      <!-- Link to login -->
+            <router-link :to="{ name: 'Login' }"
+              >Already have an account? Login here!</router-link
             >
-              <b-spinner v-if="registering" small></b-spinner>
-              <p v-else>Register</p>
-            </b-button>
           </b-form>
-
-          <!-- Link to login -->
-          <router-link :to="{ name: 'Login' }"
-            >Already have an account? Login here!</router-link
-          >
         </b-card>
       </b-col>
     </b-row>

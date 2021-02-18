@@ -1,10 +1,14 @@
+* {
+  color: #E1F5E9;
+}
+
 html {
   height: 100vh;
   width: 100vw;
   overflow: hidden;
 }
 .register-column {
-  border-left: 1px solid white;
+  border-left: 1px solid #E1F5E9;
   height: 100vh;
 }
 
@@ -12,19 +16,65 @@ html {
   background-color: #0E1C36;
   width: 80%;
   height: 80%;
+  border: none;
+}
+
+.card-body {
+  padding: 0;
 }
 
 .card-title {
   text-align: left;
+  font-size: 2.5rem;
+  margin-bottom: 25px;
 }
 
 .form-style {
   width: 75%;
   height: 75%;
+  width: 100%
+}
+
+.form-row {
+  display: block !important;
+}
+
+label {
+  display: block;
+  text-align: left;
+  font-size: 1.2rem !important;
+  max-width: 100% !important;
 }
 
 .input-style {
-  background: transparent;
+  background: #0E1C36 !important;
   border: none;
-  border-bottom: 1px solid white;
+  border-bottom: 2px solid #E1F5E9;
+  outline: none;
+  color: #E1F5E9 !important;
+  width: 115%;
 }
+
+p {
+  margin-bottom: 0;
+}
+
+button {
+  background: #293857 !important;
+  border-radius: 1.5rem !important;
+  border: none !important;
+  width: 50%;
+}
+
+.button-wrapper {
+  text-align: center;
+}
+
+a {
+  color: #E1F5E9;
+}
+
+a:hover {
+  color: white;
+}
+
