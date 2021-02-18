@@ -7,11 +7,14 @@
 
       <b-collapse v-if="isAuthenticated" id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item ><router-link :to="{name: 'Algorithms'}">Algorithms</router-link></b-nav-item>
+          <b-nav-item> Learn </b-nav-item>
+          <b-nav-item> Practice </b-nav-item>
+          <b-nav-item> Blog </b-nav-item>
+          <!-- <b-nav-item ><router-link :to="{name: 'Algorithms'}">Algorithms</router-link></b-nav-item>
           <b-nav-item ><router-link :to="{ name: 'Tags'}">Tags</router-link></b-nav-item>
           <b-nav-item><router-link :to="{ name: 'AlgorithmManager'}">AlgorithmManager</router-link></b-nav-item>
           <b-nav-item><router-link :to="{ name: 'TagManager'}">TagManager</router-link></b-nav-item>
-          <b-nav-item><router-link :to="{ name: 'LevelManager'}">LevelManager</router-link></b-nav-item>
+          <b-nav-item><router-link :to="{ name: 'LevelManager'}">LevelManager</router-link></b-nav-item> -->
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
