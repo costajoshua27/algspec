@@ -1,73 +1,116 @@
 <template>
   <v-stage :config="canvasConfig">
     <v-layer ref="layer1">
-      <v-circle ref="circle1" :config="circle1Config"></v-circle>
-      <v-circle ref="circle2" :config="circle2Config"></v-circle>
+      <v-rect
+        v-for="node of nodeConfigs"
+        :key="node.key"
+        :ref="node.key"
+        :config="node.config"
+      ></v-rect>
     </v-layer>
   </v-stage>
 </template>
 
 <script>
-import Konva from 'konva';
+// import Konva from 'konva';
 import gsap from 'gsap';
 
 export default {
   name: 'TestAnimation',
+  props: {
+    width: {
+      type: Number,
+      default: 500
+    },
+    height: {
+      type: Number,
+      default: 500
+    },
+    nodeCount: {
+      type: Number,
+      default: 6
+    },
+    nodeWidth: {
+      type: Number,
+      default: 100
+    },
+    nodeHeight: {
+      type: Number,
+      default: 100
+    }
+  },
   data() {
+    const nodes = [];
+    const xGut = (this.width - (this.nodeCount * this.nodeWidth)) / this.nodeCount / 2;
+    // const yGut = (this.height - (this.nodeCount * this.nodeHeight)) / this.nodeCount;
+
+    for (let i = 0; i < this.nodeCount; ++i) {
+        let x = i === 0 ? xGut : ((i + 1) * xGut) + ((i) * this.nodeWidth);
+        let y = this.nodeHeight / 2;
+        nodes.push({
+          key: `node${i}`,
+          config: {
+            x,
+            y,
+            width: this.nodeWidth,
+            height: this.nodeHeight,
+            fill: 'green',
+            stroke: 'black',
+            strokeWidth: 1 
+          }
+        });
+    }
+
     return {
       canvasConfig: {
-        width: 500,
-        height: 500
+        width: this.width,
+        height: this.height
       },
-      circle1Config: {
-        x: 50,
-        y: 50,
-        radius: 30,
-        fill: 'red',
-        stroke: 'black',
-        strokeWidth: 4
-      },
-      circle2Config: {
-        x: 400,
-        y: 100,
-        radius: 50,
-        fill: 'blue',
-        stroke: 'black',
-        strokeWidth: 4
-      },
+      nodeConfigs: nodes,
       layer1: null,
+      nodes: null,
     };
   },
   mounted: function() {
-    console.log(Konva, gsap);
     this.layer = this.$refs.layer1.getNode();
+    this.nodes = [];
+    console.log(this.$refs);
+    console.log(this.$refs['layer1']);
+    for (let i = 0; i < this.nodeCount; ++i) {
+      const nodeRefName = `node${i}`;
+      const nodeRef = this.$refs[nodeRefName];
+      console.log(nodeRef);
+      this.nodes.push(nodeRef[0].getNode());
+    }
     this.master();
   },
   methods: {
     drawLayer() {
       this.layer.draw();
     },
-    part1() {
-      const circle1 = this.$refs.circle1.getNode();
-      const tl = gsap.timeline()
-        .to(circle1, {x: 150, y: 250, radius: 50, fill: 'blue', onUpdate: this.drawLayer, duration: 2});
+    appear() {
+      const tl = gsap.timeline();
+      for (let i = 0; i < this.nodeCount; ++i) {
+        const currNode = this.nodes[i];
+        tl.to(currNode, { 
+          width: this.nodeWidth + 5,
+          height: this.nodeHeight + 5,
+          onUpdate: this.drawLayer,
+          duration: 0.2
+        });
+        tl.to(currNode, {
+          width: this.nodeWidth,
+          height: this.nodeHeight,
+          onUpdate: this.drawLayer,
+          duration: 0.2
+        });
+      }
       return tl;
-    },
-    part2() {
-      const circle2 = this.$refs.circle2.getNode();
-      const tl = gsap.timeline()
-        .to(circle2, {y: 250, radius: 30, fill: 'red', onUpdate: this.drawLayer, duration: 2});
-      return tl;
-    },
-    part3() {
-
     },
     master() {
       const master = gsap.timeline();
-      master.add(this.part1());
-      master.add(this.part2());
-      master.yoyo(true)
-        .repeat(-1);
+      master.add(this.appear());
+      master.repeat(-1);
     }
   }
 };

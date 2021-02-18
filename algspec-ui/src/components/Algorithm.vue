@@ -3,7 +3,7 @@
     <p>name: {{ algorithm.name }}</p> 
     <p>introduction: {{ algorithm.introduction }}</p>
     <p>overview: {{ algorithm.overview }}</p>
-    <TestAnimation />
+    <TestAnimation width=1000 />
   </div>
 </template>
 
