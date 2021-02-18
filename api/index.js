@@ -60,9 +60,11 @@ app.use(passport.session());
 const algorithmRouter = require('./routes/algorithm');
 const tagRouter = require('./routes/tag');
 const userRouter = require('./routes/user');
+const levelRouter = require('./routes/level');
 app.use('/algorithm', algorithmRouter);
 app.use('/tag', tagRouter);
 app.use('/user', userRouter);
+app.use('/level', levelRouter);
 
 // Have the server listen for requests on the designated port
 server.listen(port, () => console.log(`Listening on port ${port}`));

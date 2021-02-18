@@ -71,51 +71,6 @@ const deleteAlgorithm = async (req, res) => {
   }
 };
 
-const getAllAlgorithms = async (req, res) => {
-  try {
-    const allAlgs = await Algorithm.find({}).exec();
-    return res.status(200).send(allAlgs);
-  } catch (error) {
-    return res.status(500).send({ message: `Database error: ${error}` });
-  }
-};
-
-const getAlgorithmsByTag = async (req, res) => {
-  let {
-    tagName
-  } = req.params;
-
-  try {
-    // tagName is a string, need to .split()
-    const tag = await Tag.findOne({ name: tagName }).exec();
-    if(!tag) {
-      res.status(400).send({ message: `Tag with name ${tagName} does not exist` });
-    }
-
-    const foundAlgorithms = await Algorithm.find({ tags: { $all: [tagName] } });
-    return res.status(200).send(foundAlgorithms);
-
-  } catch (error) {
-    return res.status(500).send({ message: `Database error: ${error}` });
-  }
-};
-
-const getAlgorithmsByTags = async (req, res) => {
-  let {
-    tagNames
-  } = req.params;
-
-  try {
-    const allTagNames = tagNames.split(',');
-    const selectedAlgorithms = await Algorithm.find({ tags: { $all: allTagNames  } }); //algs must have all tags
-    return res.status(200).send(selectedAlgorithms);
-
-  } catch (error) {
-    return res.status(500).send({ message: `Database error: ${error}` });
-  }
-
-};
-
 const getAlgorithm = async (req, res) => {
   let {
     name
@@ -134,12 +89,45 @@ const getAlgorithm = async (req, res) => {
   }
 };
 
+const getAlgorithmsByTags = async (req, res) => {
+  let {
+    tagNames
+  } = req.params;
+
+  try {
+    const allTagNames = tagNames.split(',');
+
+    // Validate that all provided tag names are valid
+    for (let tagName of tagNames) {
+      const tag = await Tag.findOne({ name: tagName }).exec();
+      if (!tag) {
+        res.status(400).send({ message: `Tag with name ${tagName} does not exist` });
+      }
+    }
+
+    const selectedAlgorithms = await Algorithm.find({ tags: { $all: allTagNames  } }); //algs must have all tags
+    return res.status(200).send(selectedAlgorithms);
+
+  } catch (error) {
+    return res.status(500).send({ message: `Database error: ${error}` });
+  }
+
+};
+
+const getAllAlgorithms = async (req, res) => {
+  try {
+    const allAlgs = await Algorithm.find({}).exec();
+    return res.status(200).send(allAlgs);
+  } catch (error) {
+    return res.status(500).send({ message: `Database error: ${error}` });
+  }
+};
+
 module.exports = {
   createAlgorithm,
   updateAlgorithm,
   deleteAlgorithm,
-  getAllAlgorithms,
-  getAlgorithmsByTag,
+  getAlgorithm,
   getAlgorithmsByTags,
-  getAlgorithm
-}
+  getAllAlgorithms,
+};

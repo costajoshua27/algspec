@@ -3,17 +3,13 @@
     <p>name: {{ algorithm.name }}</p> 
     <p>introduction: {{ algorithm.introduction }}</p>
     <p>overview: {{ algorithm.overview }}</p>
-    <!-- Dis needs to change bruh -->
-    <Visualization 
-      :stageConfig="{ height: 1000, width: 1000 }"
-      :entities="algorithm.visualization.entities" 
-    ></Visualization>
+    <TestAnimation width=1000 />
   </div>
 </template>
 
 <script>
 import api from '@/config/api';
-import Visualization from '@/components/Visualization';
+import TestAnimation from '@/components/animations/TestAnimation';
 
 export default {
   name: 'Algorithm',
@@ -21,7 +17,7 @@ export default {
     name: String,
   },
   components: {
-    Visualization
+    TestAnimation
   },
   data: function() {
     return {

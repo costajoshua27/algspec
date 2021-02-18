@@ -9,6 +9,7 @@ const HelloWorld        = () => import('@/components/HelloWorld');
 const Welcome           = () => import('@/components/Welcome');
 const AlgorithmManager  = () => import('@/components/admin/AlgorithmManager');
 const TagManager        = () => import('@/components/admin/TagManager');
+const LevelManager      = () => import('@/components/admin/LevelManager');
 const Algorithms        = () => import('@/components/Algorithms');
 const Algorithm         = () => import('@/components/Algorithm');
 const Tags              = () => import('@/components/Tags');
@@ -110,6 +111,12 @@ export default new Router({
       beforeEnter: requireAuthenticated,
       name: 'TagManager',
       component: TagManager
+    },
+    {
+      path: '/admin/level_manager',
+      beforeEnter: requireAuthenticated,
+      name: 'LevelManager',
+      component: LevelManager
     },
   ]
 });
