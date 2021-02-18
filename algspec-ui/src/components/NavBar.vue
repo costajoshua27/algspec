@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-navbar toggleable="lg" type="dark" variant="dark">
-      <b-navbar-brand href="#">algspec</b-navbar-brand>
+      <b-navbar-brand href="#" class="navbar-brand">algspec</b-navbar-brand>
 
       <b-navbar-toggle v-if="isAuthenticated" target="nav-collapse"></b-navbar-toggle>
 
@@ -58,6 +58,5 @@ export default {
 }
 </script>
 
-<style>
-
+<style src="@/styles/navbar.css" scoped>
 </style>
