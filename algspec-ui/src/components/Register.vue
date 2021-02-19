@@ -139,11 +139,11 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from "vuex";
-const { mapState, mapActions } = createNamespacedHelpers("user");
+import { createNamespacedHelpers } from 'vuex';
+const { mapState, mapActions } = createNamespacedHelpers('user');
 
 export default {
-  name: "Login",
+  name: 'Register', //originally says 'Login'
   computed: {
     emailValid: function () {
       if (this.email === null) {
@@ -174,41 +174,41 @@ export default {
     },
     emailMessage: function () {
       if (this.email === null) {
-        return "";
+        return '';
       } else if (!this.emailRegExp.test(this.email)) {
-        return "Please enter a valid email";
+        return 'Please enter a valid email';
       } else {
-        return "Please enter an email";
+        return 'Please enter an email';
       }
     },
     usernameMessage: function () {
       if (this.username === null) {
-        return "";
+        return '';
       } else if (this.username.length > 0) {
-        return "Username must be at least 4 characters";
+        return 'Username must be at least 4 characters';
       } else {
-        return "Please enter a username";
+        return 'Please enter a username';
       }
     },
     passwordMessage: function () {
       if (this.password === null) {
-        return "";
+        return '';
       } else if (this.password.length > 0) {
-        return "Password must be at least 4 characters";
+        return 'Password must be at least 4 characters';
       } else {
-        return "Please enter a password";
+        return 'Please enter a password';
       }
     },
     confirmPasswordMessage: function () {
       if (this.confirmPassword === null) {
-        return "";
+        return '';
       } else if (
         this.confirmPassword.length > 0 &&
         this.confirmPassword !== this.password
       ) {
-        return "Passwords must match";
+        return 'Passwords must match';
       } else {
-        return "Please confirm the password";
+        return 'Please confirm the password';
       }
     },
     ...mapState({
@@ -228,7 +228,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      register: "register",
+      register: 'register',
     }),
     clearForm() {
       this.email = null;
@@ -245,7 +245,7 @@ export default {
           password: this.password,
         });
         this.$router.push({
-          name: "Login",
+          name: 'Login',
           params: { initAlertMessage: response.data.message },
         });
       } catch (error) {
