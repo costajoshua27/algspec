@@ -8,7 +8,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
-const { mapState } = createNamespacedHelpers('user');
+const { mapState } = createNamespacedHelpers('auth');
 
 export default {
   name: 'Welcome',

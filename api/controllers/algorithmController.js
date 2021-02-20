@@ -98,10 +98,10 @@ const getAlgorithmsByTags = async (req, res) => {
     const allTagNames = tagNames.split(',');
 
     // Validate that all provided tag names are valid
-    for (let tagName of tagNames) {
+    for (let tagName of allTagNames) {
       const tag = await Tag.findOne({ name: tagName }).exec();
       if (!tag) {
-        res.status(400).send({ message: `Tag with name ${tagName} does not exist` });
+        return res.status(400).send({ message: `Tag with name ${tagName} does not exist` });
       }
     }
 

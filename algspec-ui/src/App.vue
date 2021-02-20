@@ -1,6 +1,10 @@
 <template>
   <div id="app">
     <NavBar></NavBar>
+    <b-alert
+      :show="variant !== null && message !== null"
+      :variant="variant"
+    >{{ message }}</b-alert>
     <b-overlay :show="globalLoading">
       <router-view></router-view>
     </b-overlay>
@@ -9,7 +13,7 @@
 
 <script>
 import NavBar from '@/components/NavBar';
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'App',
@@ -18,7 +22,27 @@ export default {
   },
   computed: {
     ...mapState({
-      globalLoading: state => state.globalLoading
+      globalLoading: state => state.globalLoading,
+      variant: state => state.alert.variant,
+      message: state => state.alert.message,
+      needToClear: state => state.alert.needToClear
+    })
+  },
+  watch: {
+    $route() {
+      if (this.variant || this.message) {
+        if (!this.needToClear) {
+          this.setNeedToClear();
+        } else {
+          this.clearAlert();
+        }
+      } 
+    }
+  },
+  methods: {
+    ...mapActions({
+      clearAlert: 'alert/clear',
+      setNeedToClear: 'alert/setNeedToClear'
     })
   }
 }

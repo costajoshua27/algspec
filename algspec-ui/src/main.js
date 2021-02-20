@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueKonva from 'vue-konva';
 import router from '@/config/router';
-import api from '@/config/api';
+//import api from '@/config/api';
 import store from '@/store';
 import App from '@/App';
 
@@ -22,7 +22,6 @@ import {
   PopoverPlugin,
   BIcon,
   BIconExclamationCircleFill,
-  BIconCheckCircleFill
 } from 'bootstrap-vue';
 import Multiselect from 'vue-multiselect';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -45,22 +44,30 @@ Vue.use(SpinnerPlugin);
 Vue.use(PopoverPlugin);
 Vue.component('BIcon', BIcon);
 Vue.component('BIconExclamationCircleFill', BIconExclamationCircleFill);
-Vue.component('BIconCheckCircleFill', BIconCheckCircleFill);
 
 Vue.config.productionTip = false;
 
 // Add other plugins
 Vue.use(VueKonva);
 
+// store.dispatch('auth/checkIsAuthenticated');
+/*
+if (store.state.auth.isAuthenticated) {
+  router.push({ name: router.currentRoute.name });
+} else {
+  router.push({ name: 'Login' });
+}
+*/
+/*
 api.get('user/isAuthenticated')
   .then(response => {
     if (response.data.isAuthenticated) {
       api.get('user/me')
       .then(response => {
-        store.commit('user/setUser', response.data);
-        store.commit('user/setIsAuthenticated', true);
+        store.commit('auth/setUser', response.data);
+        store.commit('auth/setIsAuthenticated', true);
         store.commit('setGlobalLoading', false);
-        router.push({ name: 'Welcome' });
+        router.push({ name: router.currentRoute.name });
       })
       .catch(error => {
         console.log(error);
@@ -76,7 +83,7 @@ api.get('user/isAuthenticated')
   .catch(error => {
     console.log(error);
   });
-
+*/
 new Vue({
   router,
   store,

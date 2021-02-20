@@ -5,16 +5,6 @@
       <b-col sm="12" md="6" class="register-column d-flex align-items-center justify-content-center">
         <b-card class="p-3 m-3 card-style"
          title = "algspec">
-          <!-- <h3 class="ml-auto">algspec</h3> -->
-
-          <!-- Alert(s) -->
-          <b-alert
-            :show="registerError.length > 0"
-            variant="danger"
-            dismissible
-          >
-            {{ registerError }}
-          </b-alert>
 
           <b-form @submit="sendRegisterRequest" class="form-style d-flex flex-column justify-content-between no-gutters">
             <!-- E-mail -->
@@ -140,7 +130,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
-const { mapState, mapActions } = createNamespacedHelpers('user');
+const { mapActions } = createNamespacedHelpers('auth');
 
 export default {
   name: 'Register', //originally says 'Login'
@@ -210,11 +200,7 @@ export default {
       } else {
         return 'Please confirm the password';
       }
-    },
-    ...mapState({
-      registering: (state) => state.registering,
-      registerError: (state) => state.registerError,
-    }),
+    }
   },
   data: function () {
     return {
@@ -239,17 +225,13 @@ export default {
     async sendRegisterRequest(event) {
       event.preventDefault();
       try {
-        const response = await this.register({
+        await this.register({
           email: this.email,
           username: this.username,
           password: this.password,
         });
-        this.$router.push({
-          name: 'Login',
-          params: { initAlertMessage: response.data.message },
-        });
-      } catch (error) {
-        console.log(error);
+        this.$router.push({ name: 'Login' });
+      } finally {
         this.clearForm();
       }
     },

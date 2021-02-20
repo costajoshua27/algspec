@@ -2,23 +2,6 @@
   <b-card class="p-3 m-3">
     <h3>Login</h3>
 
-    <!-- Alert(s) -->
-    <b-alert
-      :show="initAlertMessage !== ''"
-      :variant="initAlertVariant"
-      dismissible
-    >
-      {{ initAlertMessage }}
-    </b-alert>
-
-    <b-alert
-      :show="loginError.length > 0"
-      variant="danger"
-      dismissible
-    >
-      {{ loginError }}
-    </b-alert>
-
     <b-form @submit="sendLoginRequest">
       <!-- E-mail -->
       <b-form-group
@@ -83,20 +66,10 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
-const { mapState, mapActions } = createNamespacedHelpers('user');
+const { mapActions } = createNamespacedHelpers('auth');
 
 export default {
   name: 'Login',
-  props: {
-    initAlertMessage: {
-      default: '',
-      type: String
-    },
-    initAlertVariant: {
-      default: 'success',
-      type: String
-    }
-  },
   computed: {
     emailValid: function() {
       if (this.email === null) {
@@ -127,11 +100,7 @@ export default {
       } else {
         return 'Please enter a password';
       }
-    },
-    ...mapState({
-      loggingIn: state => state.loggingIn,
-      loginError: state => state.loginError
-    })
+    }
   },
   data: function() {
     return {
@@ -151,10 +120,12 @@ export default {
     async sendLoginRequest(event) {
       event.preventDefault();
       try {
-        await this.login({ email: this.email, password: this.password });
+        await this.login({
+          email: this.email,
+          password: this.password
+        });
         this.$router.push({ name: 'Welcome' });
-      } catch (error) {
-        console.log(error);
+      } finally {
         this.clearForm();
       }
     }

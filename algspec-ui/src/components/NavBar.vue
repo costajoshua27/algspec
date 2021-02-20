@@ -10,11 +10,11 @@
           <b-nav-item> Learn </b-nav-item>
           <b-nav-item> Practice </b-nav-item>
           <b-nav-item> Blog </b-nav-item>
-          <!-- <b-nav-item ><router-link :to="{name: 'Algorithms'}">Algorithms</router-link></b-nav-item>
+          <b-nav-item ><router-link :to="{name: 'Algorithms'}">Algorithms</router-link></b-nav-item>
           <b-nav-item ><router-link :to="{ name: 'Tags'}">Tags</router-link></b-nav-item>
           <b-nav-item><router-link :to="{ name: 'AlgorithmManager'}">AlgorithmManager</router-link></b-nav-item>
           <b-nav-item><router-link :to="{ name: 'TagManager'}">TagManager</router-link></b-nav-item>
-          <b-nav-item><router-link :to="{ name: 'LevelManager'}">LevelManager</router-link></b-nav-item> -->
+          <b-nav-item><router-link :to="{ name: 'LevelManager'}">LevelManager</router-link></b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
@@ -36,7 +36,7 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
-const { mapState, mapActions } = createNamespacedHelpers('user');
+const { mapState, mapActions } = createNamespacedHelpers('auth');
 
 export default {
   name: 'NavBar',
@@ -52,8 +52,8 @@ export default {
     }),
     async sendLogoutRequest() {
       try {
-        const message = await this.logout();
-        this.$router.push({ name: 'Login', params: { initAlertMessage: message } });
+        await this.logout();
+        this.$router.push({ name: 'Login' });
       } catch (error) {
         console.log(error);
       }

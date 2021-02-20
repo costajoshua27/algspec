@@ -1,15 +1,17 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import user from './modules/user';
+import auth from './modules/auth';
+import alert from './modules/alert';
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
   modules: {
-    user
+    auth,
+    alert
   },
   state: {
-    globalLoading: true
+    globalLoading: false
   },
   mutations: {
     setGlobalLoading(state, globalLoading) {
