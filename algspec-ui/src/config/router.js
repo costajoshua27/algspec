@@ -14,8 +14,7 @@ const Algorithms        = () => import('@/components/Algorithms');
 const Algorithm         = () => import('@/components/Algorithm');
 const Tags              = () => import('@/components/Tags');
 const Tag               = () => import('@/components/Tag');
-const Login             = () => import('@/components/Login');
-const Register          = () => import('@/components/Register');
+const LoginRegisterControl = () => import('@/components/LoginRegisterControl')
 
 const router = new Router({
   mode: 'history',
@@ -32,15 +31,10 @@ const router = new Router({
       component: Welcome
     },
     {
-      path: '/login',
-      name: 'Login',
-      component: Login,
+      path: '/auth/:mode',
+      name: 'LoginRegisterControl',
+      component: LoginRegisterControl,
       props: true
-    },
-    {
-      path: '/register',
-      name: 'Register',
-      component: Register
     },
     {
       path: '/helloworld',
@@ -94,7 +88,7 @@ const router = new Router({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const publicPages = ['/login', '/register'];
+  const publicPages = ['/auth/login', '/auth/register'];
   const authRequired = !publicPages.includes(to.path);
   const isAuthenticated = localStorage.getItem('user');
 
@@ -103,7 +97,7 @@ router.beforeEach(async (to, from, next) => {
       localStorage.removeItem('user');
     }
     if (!isAuthenticated) {
-      return next('/login');
+      return next('/auth/login');
     }
   }
 

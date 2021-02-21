@@ -1,131 +1,124 @@
 <template>
-  <b-container fluid>
-    <b-row align-h = "center" align-v = "center">
-      <b-col sm="0" md="6">HELLO</b-col>
-      <b-col sm="12" md="6" class="register-column d-flex align-items-center justify-content-center">
-        <b-card class="p-3 m-3 card-style"
-         title = "algspec">
+  <b-card class="p-3 m-3 card-style"
+    title = "algspec">
 
-          <b-form @submit="sendRegisterRequest" class="form-style d-flex flex-column justify-content-between no-gutters">
-            <!-- E-mail -->
-            <b-form-group
-              id="email-group"
-              label="E-Mail:"
-              label-for="email-field"
-              :invalid-feedback="emailMessage"
-              :state="emailValid"
-              label-size="sm"
-              label-cols="12"
-              label-cols-lg="2"
-              content-cols="12"
-              content-cols-lg="10"
-            >
-              <b-form-input
-                type="email"
-                id="email-field"
-                class = "input-style"
-                v-model="email"
-                :state="emailValid"
-                size="sm"
-              ></b-form-input>
-            </b-form-group>
+    <b-form @submit="sendRegisterRequest" class="form-style d-flex flex-column justify-content-between">
+      <!-- E-mail -->
+      <b-form-group
+        id="email-group"
+        label="E-Mail:"
+        label-for="email-field"
+        :invalid-feedback="emailMessage"
+        :state="emailValid"
+        label-size="sm"
+        label-cols="12"
+        label-cols-lg="2"
+        content-cols="12"
+        content-cols-lg="10"
+      >
+        <b-form-input
+          type="email"
+          id="email-field"
+          class = "input-style"
+          v-model="email"
+          :state="emailValid"
+          size="sm"
+        ></b-form-input>
+      </b-form-group>
 
-            <!-- Username -->
-            <b-form-group
-              id="username-group"
-              label="Username:"
-              label-for="username-field"
-              :invalid-feedback="usernameMessage"
-              :state="usernameValid"
-              label-size="sm"
-              label-cols="12"
-              label-cols-lg="2"
-              content-cols="12"
-              content-cols-lg="10"
-            >
-              <b-form-input
-                type="text"
-                id="username-field"
-                class = "input-style"
-                v-model="username"
-                :state="usernameValid"
-                size="sm"
-              ></b-form-input>
-            </b-form-group>
+      <!-- Username -->
+      <b-form-group
+        id="username-group"
+        label="Username:"
+        label-for="username-field"
+        :invalid-feedback="usernameMessage"
+        :state="usernameValid"
+        label-size="sm"
+        label-cols="12"
+        label-cols-lg="2"
+        content-cols="12"
+        content-cols-lg="10"
+      >
+        <b-form-input
+          type="text"
+          id="username-field"
+          class = "input-style"
+          v-model="username"
+          :state="usernameValid"
+          size="sm"
+        ></b-form-input>
+      </b-form-group>
 
-            <!-- Password -->
-            <b-form-group
-              id="password-group"
-              label="Password:"
-              label-for="password-field"
-              :invalid-feedback="passwordMessage"
-              :state="passwordValid"
-              label-size="sm"
-              label-cols="12"
-              label-cols-lg="2"
-              content-cols="12"
-              content-cols-lg="10"
-            >
-              <b-form-input
-                id="password-field"
-                class = "input-style"
-                v-model="password"
-                :state="passwordValid"
-                type="password"
-                size="sm"
-              ></b-form-input>
-            </b-form-group>
+      <!-- Password -->
+      <b-form-group
+        id="password-group"
+        label="Password:"
+        label-for="password-field"
+        :invalid-feedback="passwordMessage"
+        :state="passwordValid"
+        label-size="sm"
+        label-cols="12"
+        label-cols-lg="2"
+        content-cols="12"
+        content-cols-lg="10"
+      >
+        <b-form-input
+          id="password-field"
+          class = "input-style"
+          v-model="password"
+          :state="passwordValid"
+          type="password"
+          size="sm"
+        ></b-form-input>
+      </b-form-group>
 
-            <!-- Password Confirmation -->
-            <b-form-group
-              id="confirm-password-group"
-              label="Confirm Password:"
-              label-for="confirm-password-field"
-              :invalid-feedback="confirmPasswordMessage"
-              :state="confirmPasswordValid"
-              label-size="sm"
-              label-cols="12"
-              label-cols-lg="2"
-              content-cols="12"
-              content-cols-lg="10"
-            >
-              <b-form-input
-                id="confirm-password-field"
-                class = "input-style"
-                v-model="confirmPassword"
-                :state="confirmPasswordValid"
-                type="password"
-                size="sm"
-              ></b-form-input>
-            </b-form-group>
-            
-            <!-- Register button -->
-            <div class="button-wrapper">
-              <b-button
-                type="submit"
-                variant="primary"
-                :disabled="
-                  !emailValid ||
-                  !usernameValid ||
-                  !passwordValid ||
-                  !confirmPasswordValid ||
-                  registering
-                "
-              >
-                <b-spinner v-if="registering" small></b-spinner>
-                <p v-else>Register</p>
-              </b-button>
-            </div>
-            
-                      <!-- Link to login -->
-            <router-link :to="{ name: 'Login' }"
-              >Already have an account? Login here!</router-link
-            >
-          </b-form>
-        </b-card>
-      </b-col>
-    </b-row>
-  </b-container>
+      <!-- Password Confirmation -->
+      <b-form-group
+        id="confirm-password-group"
+        label="Confirm Password:"
+        label-for="confirm-password-field"
+        :invalid-feedback="confirmPasswordMessage"
+        :state="confirmPasswordValid"
+        label-size="sm"
+        label-cols="12"
+        label-cols-lg="2"
+        content-cols="12"
+        content-cols-lg="10"
+      >
+        <b-form-input
+          id="confirm-password-field"
+          class = "input-style"
+          v-model="confirmPassword"
+          :state="confirmPasswordValid"
+          type="password"
+          size="sm"
+        ></b-form-input>
+      </b-form-group>
+      
+      <!-- Register button -->
+      <div class="button-wrapper">
+        <b-button
+          type="submit"
+          variant="primary"
+          :disabled="
+            !emailValid ||
+            !usernameValid ||
+            !passwordValid ||
+            !confirmPasswordValid ||
+            registering
+          "
+        >
+          <b-spinner v-if="registering" small></b-spinner>
+          <p v-else>Register</p>
+        </b-button>
+      </div>
+      
+                <!-- Link to login -->
+      <router-link :to="{ name: 'LoginRegisterControl', params: { mode: 'login' } }"
+        >Already have an account? Login here!</router-link
+      >
+    </b-form>
+  </b-card>
 </template>
 
 <script>
@@ -230,7 +223,7 @@ export default {
           username: this.username,
           password: this.password,
         });
-        this.$router.push({ name: 'Login' });
+        this.$router.push({ name: 'LoginRegisterControl', params: {mode: 'login'} });
       } finally {
         this.clearForm();
       }
@@ -250,5 +243,5 @@ export default {
 };
 </script>
 
-<style src='@/styles/register.css'>
+<style>
 </style>

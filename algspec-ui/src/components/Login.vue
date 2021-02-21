@@ -1,8 +1,9 @@
 <template>
-  <b-card class="p-3 m-3">
+  <b-card class="p-3 m-3 card-style"
+    title = "algspec">
     <h3>Login</h3>
 
-    <b-form @submit="sendLoginRequest">
+    <b-form @submit="sendLoginRequest" class="form-style d-flex flex-column justify-content-between">
       <!-- E-mail -->
       <b-form-group
         id="email-group"
@@ -19,6 +20,7 @@
         <b-form-input
           type="email"
           id="email-field"
+          class = "input-style"
           v-model="email"
           :state="emailValid"
           size="sm"
@@ -40,6 +42,7 @@
       >
         <b-form-input
           id="password-field"
+          class = "input-style"
           v-model="password"
           :state="passwordValid"
           type="password"
@@ -48,18 +51,20 @@
       </b-form-group>
 
       <!-- Login button -->
-      <b-button
-        type="submit"
-        variant="primary"
-        :disabled="!emailValid || !passwordValid || loggingIn"
-      >
-        <b-spinner v-if="loggingIn" small></b-spinner>
-        <p v-else>Login</p>
-      </b-button>
+      <div class="button-wrapper">
+        <b-button
+          type="submit"
+          variant="primary"
+          :disabled="!emailValid || !passwordValid || loggingIn"
+        >
+          <b-spinner v-if="loggingIn" small></b-spinner>
+          <p v-else>Login</p>
+        </b-button>
+      </div>
     </b-form>
 
     <!-- Link to register -->
-    <router-link :to="{ name: 'Register' }">Don't have an account? Register here!</router-link>
+    <router-link :to="{ name: 'LoginRegisterControl', params: { mode: 'register' } }">Don't have an account? Register here!</router-link>
 
   </b-card>
 </template>
@@ -124,7 +129,7 @@ export default {
           email: this.email,
           password: this.password
         });
-        this.$router.push({ name: 'Welcome' });
+        this.$router.push({ name: 'Welcome' }); // Eventually needs to be dashboard
       } finally {
         this.clearForm();
       }

@@ -53,7 +53,7 @@ export default {
     async sendLogoutRequest() {
       try {
         await this.logout();
-        this.$router.push({ name: 'Login' });
+        this.$router.push({ name: 'LoginRegisterControl', params: { mode: 'login' } });
       } catch (error) {
         console.log(error);
       }
