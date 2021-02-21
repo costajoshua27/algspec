@@ -1,9 +1,7 @@
 <template>
   <div id="app">
-    <!-- <NavBar v-if="!isAuthenticated"></NavBar>
-    <Menu v-else></Menu> -->
-    <!-- Eventually differentiate between Navbar and Menu, but have not implemented Menu yet -->
-    <NavBar></NavBar>
+    <NavBar v-if="!isAuthenticated"></NavBar>
+    <Menu v-else></Menu>
     <b-alert
       :show="variant !== null && message !== null"
       :variant="variant"
@@ -16,14 +14,14 @@
 
 <script>
 import NavBar from '@/components/NavBar';
-// import Menu from '@/components/Menu';
+import Menu from '@/components/Menu';
 import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'App',
   components: {
     NavBar,
-    // Menu,
+    Menu,
   },
   computed: {
     ...mapState({
@@ -54,5 +52,11 @@ export default {
 }
 </script>
 
-<style src='@/styles/app.css'>
+<style lang="scss">
+  body {
+    font-family: $font_primary;
+    color: $dm_text;
+    background-color: $dm_primary;
+    text-align: center;
+  }
 </style>

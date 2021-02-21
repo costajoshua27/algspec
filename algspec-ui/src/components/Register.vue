@@ -223,7 +223,7 @@ export default {
           username: this.username,
           password: this.password,
         });
-        this.$router.push({ name: 'LoginRegisterControl', params: {mode: 'login'} });
+        this.$router.push({ name: 'LoginRegisterControl', params: { mode: 'login' } });
       } finally {
         this.clearForm();
       }
@@ -243,5 +243,9 @@ export default {
 };
 </script>
 
-<style src='@/styles/Register.css'>
+<style lang="scss" scoped>
+  .form-style-register{
+    height: 75%;
+    width: 100%;
+  }
 </style>

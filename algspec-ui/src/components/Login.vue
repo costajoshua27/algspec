@@ -128,7 +128,7 @@ export default {
           email: this.email,
           password: this.password
         });
-        this.$router.push({ name: 'Welcome' }); // Eventually needs to be dashboard
+        this.$router.push({ name: 'Dashboard' });
       } finally {
         this.clearForm();
       }
@@ -137,6 +137,6 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 
 </style>

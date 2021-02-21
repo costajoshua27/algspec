@@ -11,7 +11,7 @@ import { createNamespacedHelpers } from 'vuex';
 const { mapState } = createNamespacedHelpers('auth');
 
 export default {
-  name: 'Welcome',
+  name: 'Dashboard',
   computed: {
     ...mapState({
       isAuthenticated: state => state.isAuthenticated,
@@ -21,6 +21,6 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 
 </style>

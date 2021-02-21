@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import VueKonva from 'vue-konva';
 import router from '@/config/router';
-//import api from '@/config/api';
 import store from '@/store';
 import App from '@/App';
 
@@ -50,40 +49,6 @@ Vue.config.productionTip = false;
 // Add other plugins
 Vue.use(VueKonva);
 
-// store.dispatch('auth/checkIsAuthenticated');
-/*
-if (store.state.auth.isAuthenticated) {
-  router.push({ name: router.currentRoute.name });
-} else {
-  router.push({ name: 'Login' });
-}
-*/
-/*
-api.get('user/isAuthenticated')
-  .then(response => {
-    if (response.data.isAuthenticated) {
-      api.get('user/me')
-      .then(response => {
-        store.commit('auth/setUser', response.data);
-        store.commit('auth/setIsAuthenticated', true);
-        store.commit('setGlobalLoading', false);
-        router.push({ name: router.currentRoute.name });
-      })
-      .catch(error => {
-        console.log(error);
-      });
-    } else {
-      store.commit('setGlobalLoading', false);
-      if (router.currentRoute.name !== 'Login') {
-        router.push({ name: 'Login' });
-      }
-      
-    }
-  })
-  .catch(error => {
-    console.log(error);
-  });
-*/
 new Vue({
   router,
   store,

@@ -438,7 +438,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .visualization-editor {
     /* we dont use `language-` classes anymore so thats why we need to add background and text color manually */
     background: #2d2d2d;

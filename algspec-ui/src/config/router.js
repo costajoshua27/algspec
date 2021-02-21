@@ -5,41 +5,36 @@ import api from '@/config/api';
 Vue.use(Router);
 
 // Import all of our components that we want to route
-const HelloWorld        = () => import('@/components/HelloWorld');
-const Welcome           = () => import('@/components/Welcome');
-const AlgorithmManager  = () => import('@/components/admin/AlgorithmManager');
-const TagManager        = () => import('@/components/admin/TagManager');
-const LevelManager      = () => import('@/components/admin/LevelManager');
-const Algorithms        = () => import('@/components/Algorithms');
-const Algorithm         = () => import('@/components/Algorithm');
-const Tags              = () => import('@/components/Tags');
-const Tag               = () => import('@/components/Tag');
-const LoginRegisterControl = () => import('@/components/LoginRegisterControl')
+const Home                  = () => import('@/components/Home');
+const Dashboard             = () => import('@/components/Dashboard');
+const LoginRegisterControl  = () => import('@/components/LoginRegisterControl');
+const Algorithms            = () => import('@/components/Algorithms');
+const Algorithm             = () => import('@/components/Algorithm');
+const Tags                  = () => import('@/components/Tags');
+const Tag                   = () => import('@/components/Tag');
+
+const AlgorithmManager      = () => import('@/components/admin/AlgorithmManager');
+const TagManager            = () => import('@/components/admin/TagManager');
+const LevelManager          = () => import('@/components/admin/LevelManager');
 
 const router = new Router({
   mode: 'history',
   routes: [
     {
       path: '/',
-      redirect: {
-        name: 'Welcome'
-      }
+      name: 'Home',
+      component: Home
     },
     {
-      path: '/welcome',
-      name: 'Welcome',
-      component: Welcome
+      path: '/dashboard',
+      name: 'Dashboard',
+      component: Dashboard
     },
     {
       path: '/auth/:mode',
       name: 'LoginRegisterControl',
       component: LoginRegisterControl,
       props: true
-    },
-    {
-      path: '/helloworld',
-      name: 'HelloWorld',
-      component: HelloWorld
     },
     {
       path: '/algorithms',
@@ -88,20 +83,25 @@ const router = new Router({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const publicPages = ['/auth/login', '/auth/register'];
+  const publicPages = ['/', '/auth/login', '/auth/register'];
   const authRequired = !publicPages.includes(to.path);
   const isAuthenticated = localStorage.getItem('user');
 
   if (authRequired) {
     if (!((await api.get('user/isAuthenticated')).data.isAuthenticated)) {
       localStorage.removeItem('user');
+      return next('/auth/login');
     }
     if (!isAuthenticated) {
       return next('/auth/login');
     }
   }
 
-  next();
+  if (isAuthenticated && to.path === '/') {
+    return next('/dashboard');
+  }
+
+  return next();
 });
 
 export default router;

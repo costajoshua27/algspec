@@ -19,10 +19,10 @@
 <script>
 import Login from '@/components/Login';
 import Register from '@/components/Register';
-import Blob1 from '@/components/SVGComponents/Blob1'
-import Blob2 from '@/components/SVGComponents/Blob2'
-import Blob3 from '@/components/SVGComponents/Blob3'
-import Blob4 from '@/components/SVGComponents/Blob4'
+import Blob1 from '@/components/svg/Blob1';
+import Blob2 from '@/components/svg/Blob2';
+import Blob3 from '@/components/svg/Blob3';
+import Blob4 from '@/components/svg/Blob4';
 
 export default {
   name: 'LoginRegisterControl',
@@ -43,11 +43,14 @@ export default {
     Blob2,
     Blob3,
     Blob4
-    
   },
 }
 </script>
 
-<style src='@/styles/LoginandRegister.css'>
-
+<style lang="scss" scoped>
+  a {
+    &:hover {
+      color: white;
+    }
+  }
 </style>
