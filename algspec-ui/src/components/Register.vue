@@ -1,6 +1,6 @@
 <template>
   <b-card class="p-3 m-3 card-style"
-    title = "algspec">
+    title = "Register">
 
     <b-form @submit="sendRegisterRequest" class="form-style d-flex flex-column justify-content-between">
       <!-- E-mail -->

@@ -1,7 +1,6 @@
 <template>
   <b-card class="p-3 m-3 card-style"
-    title = "algspec">
-    <h3>Login</h3>
+    title = "Login">
 
     <b-form @submit="sendLoginRequest" class="form-style d-flex flex-column justify-content-between">
       <!-- E-mail -->
