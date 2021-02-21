@@ -2,7 +2,7 @@
   <b-card class="p-3 m-3 card-style"
     title = "Register">
 
-    <b-form @submit="sendRegisterRequest" class="form-style d-flex flex-column justify-content-between">
+    <b-form @submit="sendRegisterRequest" class="form-style-register d-flex flex-column justify-content-between">
       <!-- E-mail -->
       <b-form-group
         id="email-group"
@@ -243,5 +243,5 @@ export default {
 };
 </script>
 
-<style>
+<style src='@/styles/Register.css'>
 </style>

@@ -1,10 +1,16 @@
 <template>
     <b-container fluid>
     <b-row align-h = "center" align-v = "center">
-      <b-col sm="0" md="6">HELLO</b-col>
+      <b-col sm="0" md="6" class="left-side-style">
+        <Blob2></Blob2>
+        <Blob1></Blob1>
+
+      </b-col>
       <b-col sm="12" md="6" class="register-column d-flex align-items-center justify-content-center">
         <Login v-if="mode == 'login'"></Login>
         <Register v-else></Register>
+        <Blob3></Blob3>
+        <Blob4></Blob4>
       </b-col>
     </b-row>
     </b-container>
@@ -13,6 +19,10 @@
 <script>
 import Login from '@/components/Login';
 import Register from '@/components/Register';
+import Blob1 from '@/components/SVGComponents/Blob1'
+import Blob2 from '@/components/SVGComponents/Blob2'
+import Blob3 from '@/components/SVGComponents/Blob3'
+import Blob4 from '@/components/SVGComponents/Blob4'
 
 export default {
   name: 'LoginRegisterControl',
@@ -28,11 +38,16 @@ export default {
   },
   components: {
     Login,
-    Register
+    Register,
+    Blob1,
+    Blob2,
+    Blob3,
+    Blob4
+    
   },
 }
 </script>
 
-<style src='@/styles/register.css'>
+<style src='@/styles/LoginandRegister.css'>
 
 </style>
