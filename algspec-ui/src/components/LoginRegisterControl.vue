@@ -84,7 +84,7 @@ export default {
   }
    /deep/ .card {
     /deep/ &-style {
-      background-color: $dm-primary;
+      background: transparent;
       width: 80%;
       height: 80%;
       border: none;
@@ -127,13 +127,12 @@ export default {
   }
 
   /deep/ .register-column {
-    border-left: 1px solid $dm-text;
     height: 100vh;
     position: static;
   }
 
   /deep/ .btn {
-    background: #293857;
+    background: $dm-btn-primary;
     border-radius: 1.5rem;
     border: none;
     width: 50%;

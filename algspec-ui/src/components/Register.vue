@@ -19,7 +19,6 @@
         <b-form-input
           type="email"
           id="email-field"
-          class = "input-style"
           v-model="email"
           :state="emailValid"
           size="sm"
@@ -42,7 +41,6 @@
         <b-form-input
           type="text"
           id="username-field"
-          class = "input-style"
           v-model="username"
           :state="usernameValid"
           size="sm"
@@ -64,7 +62,6 @@
       >
         <b-form-input
           id="password-field"
-          class = "input-style"
           v-model="password"
           :state="passwordValid"
           type="password"
@@ -87,7 +84,6 @@
       >
         <b-form-input
           id="confirm-password-field"
-          class = "input-style"
           v-model="confirmPassword"
           :state="confirmPasswordValid"
           type="password"

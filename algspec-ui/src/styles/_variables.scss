@@ -2,12 +2,13 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
 // Declare used font(s)
-$font_primary: 'Poppins', sans-serif;
+$font-primary: 'Poppins', sans-serif;
 // $font_secondary: 'Times New Roman', sans-serif;
 
 // Declare dark mode colors (dm)
-$dm_primary: #0E1C36;
-$dm_secondary: blue;
-$dm_text: #E1F5E9;
+$dm-primary: #0E1C36;
+$dm-secondary: blue;
+$dm-btn-primary: #293857;
+$dm-text: #E1F5E9;
 $dm-link: #E1F5E9;
 $dm-link-hover: white;
