@@ -53,10 +53,24 @@ export default {
 </script>
 
 <style lang="scss">
-  body {
+  #app {
     font-family: $font_primary;
     color: $dm_text;
     background-color: $dm_primary;
     text-align: center;
+    margin: 0;
+    padding: 0;
+    
+    a {
+      color: $dm-link;
+      &:hover {
+        color: $dm-link-hover;
+      }
+    }
+
+    .row {
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
 </style>

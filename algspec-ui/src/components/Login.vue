@@ -70,11 +70,12 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
-const { mapActions } = createNamespacedHelpers('auth');
+const { mapActions, mapState } = createNamespacedHelpers('auth');
 
 export default {
   name: 'Login',
   computed: {
+    ...mapState(['loggingIn']),
     emailValid: function() {
       if (this.email === null) {
         return null;

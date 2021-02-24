@@ -123,11 +123,12 @@
 
 <script>
 import { createNamespacedHelpers } from 'vuex';
-const { mapActions } = createNamespacedHelpers('auth');
+const { mapActions, mapState } = createNamespacedHelpers('auth');
 
 export default {
   name: 'Register', //originally says 'Login'
   computed: {
+    ...mapState(['registering']),
     emailValid: function () {
       if (this.email === null) {
         return null;
@@ -248,4 +249,5 @@ export default {
     height: 75%;
     width: 100%;
   }
+
 </style>

@@ -1,16 +1,18 @@
 <template>
-    <b-container fluid>
-    <b-row align-h = "center" align-v = "center">
-      <b-col sm="0" md="6" class="left-side-style">
+    <b-container fluid id="login-register-control">
+    <b-row align-h="center" align-v="center">
+      <b-col sm="0" md="6" class="login-register-control-left">
         <Blob2></Blob2>
         <Blob1></Blob1>
 
       </b-col>
-      <b-col sm="12" md="6" class="register-column d-flex align-items-center justify-content-center">
-        <Login v-if="mode == 'login'"></Login>
-        <Register v-else></Register>
-        <Blob3></Blob3>
-        <Blob4></Blob4>
+      <b-col sm="12" md="6" class="login-register-control-right">
+        <b-row align-h="center" align-v="center" no-gutters>
+          <Login v-if="mode == 'login'"></Login>
+          <Register v-else></Register>
+          <Blob3></Blob3>
+          <Blob4></Blob4>
+        </b-row>
       </b-col>
     </b-row>
     </b-container>
@@ -48,9 +50,103 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  a {
-    &:hover {
-      color: white;
+  #login-register-control {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+  }
+  .row,
+  .login-register-control-left,
+  .login-register-control-right {
+    height: 100%;
+  }
+
+  #blob1, #blob2 {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+  }
+
+  #blob3 {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+
+  #blob4 {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+   /deep/ .card {
+    /deep/ &-style {
+      background-color: $dm-primary;
+      width: 80%;
+      height: 80%;
+      border: none;
+    }
+
+    /deep/ &-body {
+      padding: 0;
+    }
+
+    /deep/ &-title {
+      text-align: left;
+      font-size: 2.5rem;
+      margin-bottom: 25px;
     }
   }
+  /deep/ .form {
+    /deep/ &-style {
+      height: 50%;
+      width: 100%;
+    }
+
+  /deep/ &-row {
+    display: block;
+  }
+
+  /deep/ &-control {
+    background: $dm-primary;
+    border: none;
+    border-bottom: 2px solid $dm-text;
+    outline: none;
+    color: $dm-text;
+    width: 115%;
+  }
+}
+  /deep/ .col-form-label {
+    display: block;
+    text-align: left;
+    font-size: 1.2rem;
+    max-width: 100%;
+  }
+
+  /deep/ .register-column {
+    border-left: 1px solid $dm-text;
+    height: 100vh;
+    position: static;
+  }
+
+  /deep/ .btn {
+    background: #293857;
+    border-radius: 1.5rem;
+    border: none;
+    width: 50%;
+  }
+
+  /deep/ .button-wrapper {
+    text-align: center;
+  }
+
+  /* left side */
+  .left-side-style {
+    position: static;
+    height: 100vh;
+  }
+
 </style>

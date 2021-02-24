@@ -1,5 +1,5 @@
 <template>
-  <svg width="608" height="575" viewBox="0 0 608 575" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg id="blob1" width="608" height="575" viewBox="0 0 608 575" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g filter="url(#filter0_d)">
       <path d="M272.597 164.175C183.434 -72.8812 36.5006 -0.836692 -25.8205 64.8176L-14.5107 591.836L593.966 586.001C594.397 578.425 586.131 519.719 549.617 345.506C503.975 127.739 384.051 460.496 272.597 164.175Z" fill="#293857"/>
     </g>
@@ -24,9 +24,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  svg {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-  }
 </style>
