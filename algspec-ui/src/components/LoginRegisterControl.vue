@@ -1,5 +1,5 @@
 <template>
-    <b-container fluid id="login-register-control">
+    <b-container fluid id="login-register-control" class="p-0">
     <b-row align-h="center" align-v="center">
       <b-col sm="0" md="6" class="login-register-control-left">
         <Blob2></Blob2>
@@ -52,7 +52,7 @@ export default {
 <style lang="scss" scoped>
   #login-register-control {
     height: 100vh;
-    width: 100vw;
+    // width: 100vw; This is causing the overflow in x direction
     overflow: hidden;
   }
   .row,
