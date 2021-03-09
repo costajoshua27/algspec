@@ -8,6 +8,8 @@ Vue.use(Router);
 const Home                  = () => import('@/components/Home');
 const Dashboard             = () => import('@/components/Dashboard');
 const LoginRegisterControl  = () => import('@/components/LoginRegisterControl');
+const Profile               = () => import('@/components/Profile');
+const Settings              = () => import('@/components/Settings');
 const Algorithms            = () => import('@/components/Algorithms');
 const Algorithm             = () => import('@/components/Algorithm');
 const Tags                  = () => import('@/components/Tags');
@@ -35,6 +37,16 @@ const router = new Router({
       name: 'LoginRegisterControl',
       component: LoginRegisterControl,
       props: true
+    },
+    {
+      path: '/profile',
+      name: 'Profile',
+      component: Profile
+    },
+    {
+      path: '/settings',
+      name: 'Settings',
+      component: Settings
     },
     {
       path: '/algorithms',

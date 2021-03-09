@@ -7,21 +7,22 @@
 
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
-          <b-nav-item ><router-link :to="{ name: 'Algorithms' }">Algorithms</router-link></b-nav-item>
-          <b-nav-item ><router-link :to="{ name: 'Tags' }">Tags</router-link></b-nav-item>
+          <b-nav-item><router-link :to="{ name: 'Algorithms' }">Algorithms</router-link></b-nav-item>
+          <b-nav-item><router-link :to="{ name: 'Tags' }">Tags</router-link></b-nav-item>
           <b-nav-item><router-link :to="{ name: 'AlgorithmManager' }">AlgorithmManager</router-link></b-nav-item>
           <b-nav-item><router-link :to="{ name: 'TagManager' }">TagManager</router-link></b-nav-item>
           <b-nav-item><router-link :to="{ name: 'LevelManager' }">LevelManager</router-link></b-nav-item>
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
-        <b-navbar-nav v-if="isAuthenticated" class="ml-auto">
+        <b-navbar-nav class="ml-auto">
           <b-nav-item-dropdown right>
             <!-- Using 'button-content' slot -->
             <template #button-content>
               <em>{{ user ? user.username : '' }}</em>
             </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
+            <b-dropdown-item><router-link :to="{ name: 'Profile' }">Profile</router-link></b-dropdown-item>
+            <b-dropdown-item><router-link :to="{ name: 'Settings' }">Settings</router-link></b-dropdown-item>
             <b-dropdown-item @click="sendLogoutRequest()">Logout</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -32,20 +33,18 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex';
-const { mapState, mapActions } = createNamespacedHelpers('auth');
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'Menu',
   computed: {
     ...mapState({
-      isAuthenticated: state => state.isAuthenticated,
-      user: state => state.user
+      user: state => state.auth.user
     })
   },
   methods: {
     ...mapActions({
-      'logout': 'logout'
+      logout: 'auth/logout' 
     }),
     async sendLogoutRequest() {
       try {

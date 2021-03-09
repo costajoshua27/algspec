@@ -1,9 +1,6 @@
 <template>
   <div>
-    HOME
-    isAuthenticated: {{ isAuthenticated }}
-    <br>
-    user: {{ JSON.stringify(user) }}
+    Theme: {{ user.settings.theme }}  
   </div>
 </template>
 
@@ -11,10 +8,12 @@
 import { mapState, mapActions } from 'vuex';
 
 export default {
-  name: 'Home',
+  name: 'Settings',
+  components: {
+
+  },
   computed: {
     ...mapState({
-      isAuthenticated: state => state.auth.isAuthenticated,
       user: state => state.auth.user
     })
   },

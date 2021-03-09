@@ -118,13 +118,14 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex';
-const { mapActions, mapState } = createNamespacedHelpers('auth');
+import { mapState, mapActions } from 'vuex';
 
 export default {
-  name: 'Register', //originally says 'Login'
+  name: 'Register',
   computed: {
-    ...mapState(['registering']),
+    ...mapState({
+      registering: state => state.auth.registering
+    }),
     emailValid: function () {
       if (this.email === null) {
         return null;
@@ -204,7 +205,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      register: 'register',
+      register: 'auth/register',
     }),
     clearForm() {
       this.email = null;

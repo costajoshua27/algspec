@@ -65,7 +65,7 @@ const register = async (req, res) => {
       currentExperience: 0,
       algorithmsLearned: [],
       achievementsEarned: [],
-      preferences: {
+      settings: {
         theme: 'light'
       }
     });

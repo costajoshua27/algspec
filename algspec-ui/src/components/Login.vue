@@ -69,13 +69,14 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex';
-const { mapActions, mapState } = createNamespacedHelpers('auth');
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'Login',
   computed: {
-    ...mapState(['loggingIn']),
+    ...mapState({
+      loggingIn: state => state.auth.loggingIn
+    }),
     emailValid: function() {
       if (this.email === null) {
         return null;
@@ -116,7 +117,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      login: 'login'
+      login: 'auth/login'
     }),
     clearForm() {
       this.email = null;
