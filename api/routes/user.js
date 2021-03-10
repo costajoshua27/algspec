@@ -13,5 +13,6 @@ router.get('/isAuthenticated', userController.isAuthenticated);
 router.post('/register', userController.register);
 router.post('/login', userController.authenticate, userController.login);
 router.post('/logout', userController.logout);
+router.post('/updateSettings', userController.updateSettings);
 
 module.exports = router;

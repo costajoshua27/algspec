@@ -36,7 +36,7 @@ const updateAlgorithm = async (req, res) => {
 
   try {
     // First check if the algorithm doesn't exist, if so just create it
-    const alg = await Algorithm.findById({ _id: id }).exec();
+    const alg = await Algorithm.findById(id).exec();
     if (!alg) {
       return createAlgorithm(req, res);
     }

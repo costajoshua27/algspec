@@ -100,6 +100,30 @@ const logout = async (req, res) => {
   return res.status(200).send({ message: 'Successfully logged out' }); 
 };
 
+// Settings-related controllers
+// -----------------------------
+const updateSettings = async (req, res) => {
+  const {
+    id,
+    theme
+  } = req.body;
+
+  try {
+    const user = await User.findById(id).exec();
+    if (!user) {
+      return res.status(400).send({ message: `User with that id does not exist` });
+    }
+
+    user.settings.theme = theme;
+    await user.save();
+
+    return res.status(200).send(user);
+
+  } catch (error) {
+    return res.status(500).send({ message: `Database error: ${error}` });
+  }
+}
+
 // Algorithm-related controllers
 // -----------------------------
 const finishAlgorithm = async (req, res) => {
@@ -133,6 +157,9 @@ module.exports = {
   register,
   login, 
   logout,
+
+  // Settings-related
+  updateSettings,
 
   // Algorithm-related
   finishAlgorithm,

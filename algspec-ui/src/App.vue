@@ -23,6 +23,9 @@ export default {
     NavBar,
     Menu,
   },
+  mounted() {
+    this.getUserTheme({ vm: this });
+  },
   computed: {
     ...mapState({
       globalLoading: state => state.globalLoading,
@@ -46,27 +49,41 @@ export default {
   methods: {
     ...mapActions({
       clearAlert: 'alert/clear',
-      setNeedToClear: 'alert/setNeedToClear'
+      setNeedToClear: 'alert/setNeedToClear',
+      getUserTheme: 'getUserTheme'
     })
   }
 }
 </script>
 
 <style lang="scss">
-  #app {
-    font-family: $font_primary;
-    color: $dm_text;
-    background-color: $dm_primary;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    
+  [data-theme="light"] {
+    color: $lm-text;
+    background-color: $lm-primary;
+    a {
+      color: $lm-link;
+      &:hover {
+        color: $lm-link-hover;
+      }
+    }
+  }
+
+  [data-theme="dark"] {
+    color: $dm-text;
+    background-color: $dm-primary;
     a {
       color: $dm-link;
       &:hover {
         color: $dm-link-hover;
       }
     }
+  }
+
+  #app {
+    font-family: $font-primary;
+    text-align: center;
+    margin: 0;
+    padding: 0;
 
     .row {
       margin-left: 0;

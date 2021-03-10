@@ -23,7 +23,7 @@ const updateLevel = async (req, res) => {
   } = req.body;
   try {
     // First check if the level doesn't exist, if so just create it
-    const level = await Level.findById({ _id: id }).exec();
+    const level = await Level.findById(id).exec();
     if (!level) {
       return createLevel(req, res);
     }

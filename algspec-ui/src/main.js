@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueKonva from 'vue-konva';
 import router from '@/config/router';
+import { Themes } from '@/config/theme';
 import store from '@/store';
 import App from '@/App';
 
@@ -12,6 +13,7 @@ import {
   DropdownPlugin,
   NavbarPlugin,
   FormInputPlugin,
+  FormSelectPlugin,
   OverlayPlugin,
   ButtonPlugin,
   FormPlugin,
@@ -34,6 +36,7 @@ Vue.use(CardPlugin);
 Vue.use(DropdownPlugin);
 Vue.use(NavbarPlugin);
 Vue.use(FormInputPlugin);
+Vue.use(FormSelectPlugin);
 Vue.use(OverlayPlugin);
 Vue.use(ButtonPlugin);
 Vue.use(FormPlugin);
@@ -48,6 +51,7 @@ Vue.config.productionTip = false;
 
 // Add other plugins
 Vue.use(VueKonva);
+Vue.prototype.$themes = new Themes();
 
 new Vue({
   router,

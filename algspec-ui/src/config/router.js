@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import api from '@/config/api';
+import store from '@/store';
 
 Vue.use(Router);
 
@@ -97,20 +98,18 @@ const router = new Router({
 router.beforeEach(async (to, from, next) => {
   const publicPages = ['/', '/auth/login', '/auth/register'];
   const authRequired = !publicPages.includes(to.path);
-  const isAuthenticated = localStorage.getItem('user');
 
   if (authRequired) {
     if (!((await api.get('user/isAuthenticated')).data.isAuthenticated)) {
       localStorage.removeItem('user');
       return next('/auth/login');
+    } else {
+      const user = (await api.get('user/me')).data;
+      store.commit('auth/setUser', user);
+      if (to.path === '/') {
+        return next('/dashboard');
+      }
     }
-    if (!isAuthenticated) {
-      return next('/auth/login');
-    }
-  }
-
-  if (isAuthenticated && to.path === '/') {
-    return next('/dashboard');
   }
 
   return next();
