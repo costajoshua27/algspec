@@ -24,7 +24,7 @@ const updateTag = async (req, res) => {
 
   try {
     // First check if the tag doesn't exist, if so just create it
-    const tag = await Tag.findById({ _id: id }).exec();
+    const tag = await Tag.findById(id).exec();
     if (!tag) {
       return createTag(req, res);
     }

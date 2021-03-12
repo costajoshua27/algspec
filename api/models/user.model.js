@@ -1,6 +1,6 @@
 const { algorithmSchema } = require('./algorithm.model');
 const { achievementSchema } = require('./achievement.model');
-const { preferencesSchema } = require('./preferences.model');
+const { settingsSchema } = require('./settings.model');
 const { levelSchema } = require('./level.model');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
@@ -31,7 +31,7 @@ const userSchema = new Schema({
   },
   algorithmsLearned: [algorithmSchema],
   achievementsEarned: [achievementSchema],
-  preferences: preferencesSchema
+  settings: settingsSchema
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);

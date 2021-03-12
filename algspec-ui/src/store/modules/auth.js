@@ -13,7 +13,11 @@ const getters = {
 
 const mutations = {
   setUser(state, user) {
+    if (user === null) {
+      localStorage.removeItem('user');
+    }
     state.user = user;
+    localStorage.setItem('user', JSON.stringify(user));
   },
   setIsAuthenticated(state, isAuthenticated) {
     state.isAuthenticated = isAuthenticated;
@@ -52,7 +56,6 @@ const actions = {
           commit('setUser', response.data);
           commit('setIsAuthenticated', true);
           dispatch('alert/success', { message: 'Successfully logged in!' }, { root: true });
-          localStorage.setItem('user', JSON.stringify(response.data));
           resolve();
         })
         .catch(error => {
@@ -71,7 +74,6 @@ const actions = {
           commit('setUser', null);
           commit('setIsAuthenticated', false);
           dispatch('alert/success', { message: response.data.message }, { root: true });
-          localStorage.removeItem('user');
           resolve();
         })
         .catch(error => {

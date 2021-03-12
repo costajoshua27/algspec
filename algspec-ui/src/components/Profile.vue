@@ -1,9 +1,8 @@
 <template>
-  <div>
-    HOME
-    isAuthenticated: {{ isAuthenticated }}
-    <br>
-    user: {{ JSON.stringify(user) }}
+  <div class="profile p-4">
+    <h3>{{ user.username }}</h3> 
+    <h4>Level {{ user.currentLevel.number }}</h4>
+    <h5>{{ user.currentExperience }}/{{ user.currentLevel.experienceNeeded }}</h5> 
   </div>
 </template>
 
@@ -11,10 +10,12 @@
 import { mapState, mapActions } from 'vuex';
 
 export default {
-  name: 'Home',
+  name: 'Profile',
+  components: {
+
+  },
   computed: {
     ...mapState({
-      isAuthenticated: state => state.auth.isAuthenticated,
       user: state => state.auth.user
     })
   },
@@ -27,5 +28,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+  .profile {
+    height: 100vh;
+  }
 </style>

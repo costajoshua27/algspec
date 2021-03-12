@@ -2,16 +2,24 @@ version: "3.9"
 services:
   algspec-ui:
     build: 
-      context: "./algspec-ui/"
+      context: "./algspec-ui"
+      dockerfile: "Dockerfile"
       args:
         - BASE_API_URL=${BASE_API_URL}
+    volumes:
+      - "./algspec-ui:/usr/src/app/algspec-ui"
+      - "/usr/src/app/algspec-ui/node_modules"
     ports: 
-      - "8081:80"
+      - "8081:8081"
   algspec-api:
     build: 
-      context: "./api/"
+      context: "./api"
+      dockerfile: "Dockerfile"
       args:
         - DB_URI=${DB_URI}
         - SESSION_SECRET=${SESSION_SECRET}
+    volumes:
+      - "./api:/usr/src/app/api"
+      - "/usr/src/app/api/node_modules"
     ports: 
       - "8080:8080"

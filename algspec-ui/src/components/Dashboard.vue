@@ -7,15 +7,19 @@
 </template>
 
 <script>
-import { createNamespacedHelpers } from 'vuex';
-const { mapState } = createNamespacedHelpers('auth');
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'Dashboard',
   computed: {
     ...mapState({
-      isAuthenticated: state => state.isAuthenticated,
-      user: state => state.user
+      isAuthenticated: state => state.auth.isAuthenticated,
+      user: state => state.auth.user
+    })
+  },
+  methods: {
+    ...mapActions({
+
     })
   }
 }
