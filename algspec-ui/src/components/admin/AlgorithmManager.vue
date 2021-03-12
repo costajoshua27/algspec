@@ -12,21 +12,13 @@
           <b-button @click="createAlgorithm()">Create an algorithm</b-button>
         </b-row>
         <b-row align-h="center">
-          <b-card-group deck class="mx-4 mt-2 mb-4">
-            <b-card :key="alg.name" v-for="alg in algorithms">
-              <b-row>
-                <b-col cols="12">
-                  <h6>{{ alg.name }}</h6>
-                </b-col>
-                <b-col cols="12">
-                  <b-button @click="editAlgorithm(alg)">Edit</b-button>
-                </b-col>
-                <b-col cols="12">
-                  <b-button variant="danger" @click="launchConfirmDelete(alg)">Delete</b-button>
-                </b-col>
-              </b-row>
-            </b-card>
-          </b-card-group>
+            <b-col>
+              <b-card :key="alg.name" v-for="alg in algorithms">
+                <h6>Name: {{ alg.name }}</h6>
+                <b-button class="mr-3" @click="editAlgorithm(alg)">Edit</b-button>
+                <b-button variant="danger" @click="launchConfirmDelete(alg)">Delete</b-button>
+              </b-card>
+            </b-col>
         </b-row>
       </b-card>
 

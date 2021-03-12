@@ -12,22 +12,14 @@
           <b-button @click="createLevel()">Add a new level</b-button>
         </b-row>
         <b-row align-h="center">
-          <b-card-group deck class="mx-4 mt-2 mb-4">
+          <b-col>
             <b-card :key="level.number" v-for="level in levels">
-              <b-row>
-                <b-col cols="12">
-                  <h6>{{ level.number }}</h6>
-                  <p>{{ level.experienceNeeded }}</p> 
-                </b-col>
-                <b-col cols="12">
-                  <b-button @click="editLevel(level)">Edit</b-button>
-                </b-col>
-                <b-col cols="12">
-                  <b-button variant="danger" @click="launchConfirmDelete(level)">Delete</b-button>
-                </b-col>
-              </b-row>
+              <h6>Level: {{ level.number }}</h6>
+              <p>Experience Needed: {{ level.experienceNeeded }}</p> 
+              <b-button class="mr-3" @click="editLevel(level)">Edit</b-button>
+              <b-button variant="danger" @click="launchConfirmDelete(level)">Delete</b-button>
             </b-card>
-          </b-card-group>
+          </b-col>
         </b-row>
       </b-card>
 

@@ -66,6 +66,9 @@ export default {
         color: $lm-link-hover;
       }
     }
+    .card, .modal-content {
+      background-color: $lm-secondary;
+    }
   }
 
   [data-theme="dark"] {
@@ -76,6 +79,9 @@ export default {
       &:hover {
         color: $dm-link-hover;
       }
+    }
+    .card, .modal-content {
+      background-color: $dm-secondary;
     }
   }
 

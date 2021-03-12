@@ -1,12 +1,26 @@
 <template>
   <div>
-    <label for="settings-theme">Theme</label>
-    <b-form-select
-      id="settings-theme"
-      class="w-50"
-      v-model="theme"
-      :options="themes"
-    ></b-form-select>
+    <b-card
+      class="mt-5 px-1 py-3 mx-auto w-75"
+      rounded
+    >
+      <template #header>
+        <h5>Settings</h5>
+      </template>
+      <b-row>
+        <b-col>
+          <label for="settings-theme">Theme</label>
+        </b-col>
+        <b-col>
+          <b-form-select
+            id="settings-theme"
+            class="w-100"
+            v-model="theme"
+            :options="themes"
+          ></b-form-select>
+        </b-col>
+      </b-row>
+    </b-card>
   </div>
 </template>
 

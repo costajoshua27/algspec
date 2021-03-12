@@ -12,21 +12,13 @@
           <b-button @click="createTag()">Create a tag</b-button>
         </b-row>
         <b-row align-h="center">
-          <b-card-group deck class="mx-4 mt-2 mb-4">
-            <b-card :key="tag.name" v-for="tag in tags">
-              <b-row>
-                <b-col cols="12">
-                  <h6>{{ tag.name }}</h6>
-                </b-col>
-                <b-col cols="12">
-                  <b-button @click="editTag(tag)">Edit</b-button>
-                </b-col>
-                <b-col>
-                  <b-button variant="danger" @click="launchConfirmDelete(tag)">Delete</b-button>
-                </b-col>
-              </b-row>
-            </b-card>
-          </b-card-group>
+            <b-col>
+              <b-card :key="tag.name" v-for="tag in tags">
+                <h6>Name: {{ tag.name }}</h6>
+                <b-button class="mr-3" @click="editTag(tag)">Edit</b-button>
+                <b-button variant="danger" @click="launchConfirmDelete(tag)">Delete</b-button>
+              </b-card>
+            </b-col>
         </b-row>
       </b-card>
 
