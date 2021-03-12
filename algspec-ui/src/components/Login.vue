@@ -117,7 +117,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      login: 'auth/login'
+      login: 'auth/login',
+      getUserTheme: 'getUserTheme'
     }),
     clearForm() {
       this.email = null;
@@ -130,6 +131,7 @@ export default {
           email: this.email,
           password: this.password
         });
+        this.getUserTheme({ vm: this });
         this.$router.push({ name: 'Dashboard' });
       } finally {
         this.clearForm();

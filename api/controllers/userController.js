@@ -63,8 +63,6 @@ const register = async (req, res) => {
       password: hashedPassword,
       currentLevel: { number: levelOne.number, experienceNeeded: levelOne.experienceNeeded },
       currentExperience: 0,
-      algorithmsLearned: [],
-      achievementsEarned: [],
       settings: {
         theme: 'light'
       }

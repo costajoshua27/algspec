@@ -3,10 +3,10 @@
     <label for="settings-theme">Theme</label>
     <b-form-select
       id="settings-theme"
+      class="w-50"
       v-model="theme"
       :options="themes"
     ></b-form-select>
-    Theme: {{ user.settings.theme }}  
   </div>
 </template>
 
@@ -33,9 +33,10 @@ export default {
   },
   mounted() {
     this.themes = this.$themes.allThemes.map(t => {
+      const text = t[0].toUpperCase() + t.substring(1);
       return {
         value: t,
-        text: t
+        text
       };
     });
   },
