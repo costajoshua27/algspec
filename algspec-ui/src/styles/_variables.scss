@@ -3,20 +3,66 @@
 
 // Declare used font(s)
 $font-primary: 'Poppins', sans-serif;
-// $font_secondary: 'Times New Roman', sans-serif;
-
-// Declare dark mode colors (dm)
-$dm-primary: #0E1C36;
-$dm-secondary: #243b63;
-$dm-btn-primary: #293857;
-$dm-text: #E1F5E9;
-$dm-link: #E1F5E9;
-$dm-link-hover: white;
 
 // Declare light mode colors (lm)
+// ------------------------------
+// Base colors
 $lm-primary: white;
 $lm-secondary: lightgray;
-$lm-btn-primary: darkblue;
 $lm-text: black;
+// Base button
+$lm-btn: #293857;
+$lm-btn-text: #E1F5E9;
+$lm-btn-border: #293857;
+$lm-btn-hover: #293857;
+$lm-btn-hover-text: #E1F5E9;
+$lm-btn-hover-border: #293857;
+// Primary(confirm) button
+$lm-btn-primary: #E1F5E9;
+$lm-btn-primary-text: #243B63;
+$lm-btn-primary-border: #243B63;
+$lm-btn-primary-hover: #53FF53;
+$lm-btn-primary-hover-text: #243B63;
+$lm-btn-primary-hover-border: #243B63;
+// Danger(cancel) button
+$lm-btn-danger: #FFBABA;
+$lm-btn-danger-text: #243B63;
+$lm-btn-danger-border: #243B63;
+$lm-btn-danger-hover: #B9403E;
+$lm-btn-danger-hover-text: #E1F5E9;
+$lm-btn-danger-hover-border: #E1F5E9;
+// Links
 $lm-link: red;
 $lm-link-hover: darkred;
+
+// Declare dark mode colors (dm)
+// ------------------------------
+// Base colors
+$dm-primary: #0E1C36;
+$dm-secondary: #243B63;
+$dm-text: #E1F5E9;
+// Base button
+$dm-btn: #E1F5E9;
+$dm-btn-text: #243B63;
+$dm-btn-border: #E1F5E9;
+$dm-btn-hover: #0E1C36;
+$dm-btn-hover-text: #E1F5E9;
+$dm-btn-hover-border: #0E1C36;
+// Primary(confirm) button
+$dm-btn-primary: #E1F5E9;
+$dm-btn-primary-text: #243B63;
+$dm-btn-primary-border: #243B63;
+$dm-btn-primary-hover: #53FF53;
+$dm-btn-primary-hover-text: #243B63;
+$dm-btn-primary-hover-border: #243B63;
+// Danger(cancel) button
+$dm-btn-danger: #FFBABA;
+$dm-btn-danger-text: #243B63;
+$dm-btn-danger-border: #243B63;
+$dm-btn-danger-hover: #B9403E;
+$dm-btn-danger-hover-text: #E1F5E9;
+$dm-btn-danger-hover-border: #E1F5E9;
+// Links
+$dm-link: #E1F5E9;
+$dm-link-hover: #53FF53;
+

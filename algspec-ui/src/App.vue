@@ -60,12 +60,51 @@ export default {
   [data-theme="light"] {
     color: $lm-text;
     background-color: $lm-primary;
+
     a {
       color: $lm-link;
+
       &:hover {
         color: $lm-link-hover;
       }
     }
+
+    .btn {
+      color: $lm-btn-text;
+      background-color: $lm-btn;
+      border-color: $lm-btn-border;
+
+      &:hover {
+        color: $lm-btn-hover-text;
+        background-color: $lm-btn-hover;
+        border-color: $lm-btn-hover-border; 
+      }
+
+      &-primary, &-success {
+        color: $lm-btn-primary-text;
+        background-color: $lm-btn-primary;
+        border-color: $lm-btn-primary-border;
+      }
+
+      &-primary:hover, &-success:hover {
+        color: $lm-btn-primary-hover-text;
+        background-color: $lm-btn-primary-hover;
+        border-color: $lm-btn-primary-hover-border;
+      }
+
+      &-danger {
+        color: $lm-btn-danger-text;
+        background-color: $lm-btn-danger;
+        border-color: $lm-btn-danger-border;
+      }
+
+      &-danger:hover {
+        color: $lm-btn-danger-hover-text;
+        background-color: $lm-btn-danger-hover;
+        border-color: $lm-btn-danger-hover-border;
+      }
+    }
+
     .card, .modal-content {
       background-color: $lm-secondary;
     }
@@ -74,12 +113,51 @@ export default {
   [data-theme="dark"] {
     color: $dm-text;
     background-color: $dm-primary;
+
     a {
       color: $dm-link;
+
       &:hover {
         color: $dm-link-hover;
       }
     }
+
+    .btn {
+      color: $dm-btn-text;
+      background-color: $dm-btn;
+      border-color: $dm-btn-border;
+
+      &:hover {
+        color: $dm-btn-hover-text;
+        background-color: $dm-btn-hover;
+        border-color: $dm-btn-hover-border; 
+      }
+
+      &-primary, &-success {
+        color: $dm-btn-primary-text;
+        background-color: $dm-btn-primary;
+        border-color: $dm-btn-primary-border;
+      }
+
+      &-primary:hover, &-success:hover {
+        color: $dm-btn-primary-hover-text;
+        background-color: $dm-btn-primary-hover;
+        border-color: $dm-btn-primary-hover-border;
+      }
+
+      &-danger {
+        color: $dm-btn-danger-text;
+        background-color: $dm-btn-danger;
+        border-color: $dm-btn-danger-border;
+      }
+
+      &-danger:hover {
+        color: $dm-btn-danger-hover-text;
+        background-color: $dm-btn-danger-hover;
+        border-color: $dm-btn-danger-hover-border;
+      }
+    }
+
     .card, .modal-content {
       background-color: $dm-secondary;
     }
