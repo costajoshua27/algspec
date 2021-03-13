@@ -1,5 +1,5 @@
 const { algorithmSchema } = require('./algorithm.model');
-const { achievementSchema } = require('./achievement.model');
+// const { achievementSchema } = require('./achievement.model');
 const { settingsSchema } = require('./settings.model');
 const { levelSchema } = require('./level.model');
 const mongoose = require('mongoose');
@@ -29,9 +29,12 @@ const userSchema = new Schema({
     type: Number,
     required: true
   },
-  algorithmsLearned: [algorithmSchema],
-  achievementsEarned: [achievementSchema],
-  settings: settingsSchema
+  settings: settingsSchema,
+  algorithmsCompleted: [algorithmSchema],
+  algorithmsInProgress: [algorithmSchema],
+  // Will eventually implement achievements!
+  // achievementsCompleted: [achievementSchema],
+  // achievementSInProgress: [achievementSchema]
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
