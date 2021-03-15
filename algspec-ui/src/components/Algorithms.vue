@@ -20,6 +20,7 @@
 
 <script>
 import api from '@/config/api';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'Algorithms',
@@ -47,11 +48,14 @@ export default {
       this.displaySelectedTags = Array.from(this.selectedTags);
       console.log('setting tags...', this.tags);
       console.log('setting algorithms...', this.algorithms);
-    } catch (error) {
-      console.log('error when mounting component: ', error);
+    } catch (err) {
+      this.error({ message: `Error loading algorithms data: ${err.message}`, redirect: false });
     }
   },
   methods: {
+    ...mapActions({
+      error: 'alert/error'
+    }),
     toggleTag(tag) { // should be toggleTag
       this.selectedTags.has(tag.name) ? this.selectedTags.delete(tag.name) : this.selectedTags.add(tag.name);
       this.displaySelectedTags = Array.from(this.selectedTags);

@@ -14,6 +14,7 @@
 
 <script>
 import api from '@/config/api';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'Tag',
@@ -31,9 +32,14 @@ export default {
       this.tag = (await api.get(`/tag/${this.name}`)).data;
       this.algorithms = (await api.get(`/algorithm/tags/${this.name}`)).data;
       console.log('setting found algorithms...', this.algorithms);
-    } catch(error) {
-      console.log('error when mounting components: ', error);
+    } catch(err) {
+      this.error({ message: `Error occurred getting tag data: ${err.message}`, redirect: false });
     }
+  },
+  methods: {
+    ...mapActions({
+      error: 'alert/error'
+    })
   }
   
 }

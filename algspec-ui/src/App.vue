@@ -1,26 +1,25 @@
 <template>
   <div id="app">
-    <NavBar v-if="!isAuthenticated"></NavBar>
-    <Menu v-else></Menu>
-    <b-alert
-      :show="variant !== null && message !== null"
-      :variant="variant"
-    >{{ message }}</b-alert>
-    <b-overlay :show="globalLoading">
-      <router-view></router-view>
-    </b-overlay>
+    <Menu></Menu>
+    <b-container fluid class="main">
+      <b-alert
+        :show="variant !== null && message !== null"
+        :variant="variant"
+      >{{ message }}</b-alert>
+      <b-overlay :show="globalLoading">
+        <router-view></router-view>
+      </b-overlay>
+    </b-container>
   </div>
 </template>
 
 <script>
-import NavBar from '@/components/NavBar';
 import Menu from '@/components/Menu';
 import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'App',
   components: {
-    NavBar,
     Menu,
   },
   mounted() {
@@ -57,6 +56,27 @@ export default {
 </script>
 
 <style lang="scss">
+  #app {
+    font-family: $font-primary;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+
+    .container-fluid {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .main {
+      height: inherit;
+      padding: 0;
+      padding-left: $menu-border-width;
+      overflow-y: auto;
+    }
+  }
+
   [data-theme="light"] {
     color: $lm-text;
     background-color: $lm-primary;
@@ -102,6 +122,14 @@ export default {
         color: $lm-btn-danger-hover-text;
         background-color: $lm-btn-danger-hover;
         border-color: $lm-btn-danger-hover-border;
+      }
+    }
+
+    .menu {
+      background-color: $menu-lm-background;
+
+      &__border {
+        background-color: $menu-lm-border;
       }
     }
 
@@ -158,20 +186,17 @@ export default {
       }
     }
 
+    .menu {
+      background-color: $menu-dm-background;
+
+      &__border {
+        background-color: $menu-dm-border;
+      }
+
+    }
+
     .card, .modal-content {
       background-color: $dm-secondary;
-    }
-  }
-
-  #app {
-    font-family: $font-primary;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-
-    .row {
-      margin-left: 0;
-      margin-right: 0;
     }
   }
 </style>

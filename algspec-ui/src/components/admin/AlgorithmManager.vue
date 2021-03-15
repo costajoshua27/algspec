@@ -229,6 +229,7 @@
 
 <script>
 import api from '@/config/api';
+import { mapActions } from 'vuex';
 import { PrismEditor } from 'vue-prism-editor';
 import 'vue-prism-editor/dist/prismeditor.min.css';
 
@@ -289,11 +290,14 @@ export default {
       console.log('setting algorithms...', this.algorithms);
       console.log('setting the available tags...', this.tagPool);
 
-    } catch (error) {
-      console.log('error when mounting component: ', error);
+    } catch (err) {
+      this.error({ message: `Error loading algorithm data: ${err.message}`, redirect: false });
     }
   },
   methods: {
+    ...mapActions({
+      error: 'alert/error'
+    }),
     highlighter(code) {
       return highlight(code, languages.json);
     },
@@ -378,8 +382,8 @@ export default {
         this.algorithms = (await api.get('/algorithm/all')).data;
         console.log('setting algorithms...', this.algorithms);
         
-      } catch (error) {
-        console.log('error when saving algorithm data: ', error);
+      } catch (err) {
+        this.error({ message: `Error saving algorithm data: ${err.message}`, redirect: false });
 
       } finally {
         // Then clear the modal fields and close it
@@ -404,8 +408,8 @@ export default {
         this.algorithms = (await api.get('/algorithm/all')).data;
         console.log('setting algorithms...', this.algorithms);
       
-      } catch (error) {
-        console.log('error when saving algorithm data: ', error);
+      } catch (err) {
+        this.error({ message: `Error deleting algorithm: ${err.message}`, redirect: false });
       }
     },
     launchConfirmDelete(alg) {
@@ -415,9 +419,12 @@ export default {
     async confirmDeleteAlgorithm(close) {
       try {
         await this.deleteAlgorithm();
-
-      } catch (error) {
-        console.log('error when deleting algorithm data: ', error);
+        // Reload all of the algorithm data to refresh the list
+        this.algorithms = (await api.get('/algorithm/all')).data;
+        console.log('setting algorithms...', this.algorithms);
+      
+      } catch (err) {
+        this.error({ message: `Error reloading algorithm data: ${err.message}`, redirect: false });
 
       } finally {
         close();

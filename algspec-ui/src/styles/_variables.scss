@@ -32,8 +32,8 @@ $lm-btn-danger-hover: #B9403E;
 $lm-btn-danger-hover-text: #E1F5E9;
 $lm-btn-danger-hover-border: #E1F5E9;
 // Links
-$lm-link: red;
-$lm-link-hover: darkred;
+$lm-link: blue;
+$lm-link-hover: darkblue;
 
 // Declare dark mode colors (dm)
 // ------------------------------
@@ -66,3 +66,12 @@ $dm-btn-danger-hover-border: #E1F5E9;
 $dm-link: #E1F5E9;
 $dm-link-hover: #53FF53;
 
+// Menu config vars
+$menu-width: 200px;
+$menu-icon-width: 50px;
+$menu-border-width: 3px;
+$menu-dm-background: #243B63;
+$menu-dm-border: #E1F5E9;
+$menu-lm-background: lightgray;
+$menu-lm-border: gray;
+$menu-width-transition: width 0.2s;

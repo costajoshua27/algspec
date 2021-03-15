@@ -1,35 +1,40 @@
 <template>
-  <div>
-    <b-navbar toggleable="lg" type="dark" variant="dark">
-      <b-navbar-brand href="#" class="navbar-brand"><router-link :to="{ name: 'Dashboard' }">algspec</router-link></b-navbar-brand>
+  <nav :class="{ menu: true, menu__collapsed: collapsed}">
+    <div class="menu__border"></div>
+    <router-link
+      v-for="link in menuLinks"
+      class="menu__link"
+      :to="link.to"
+      :key="link.label"
+    >
+      <div class="menu__icon-container">
+        <b-icon
+          class="menu__icon"
+          :icon="link.icon"
+        ></b-icon>
+      </div>
+      <span class="menu__label">{{ link.label }}</span>
+    </router-link>
+    <br>
+    <button class="btn" @click="() => collapsed = !collapsed"> HI</button>
 
-      <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
+    <router-link
+      v-if="isAuthenticated"
+      class="menu__link"
+      :to="{ name: 'Profile' }">
+      <div class="menu__icon-container">
+        <b-icon
+          class="menu__icon"
+          icon="menu-app"
+        ></b-icon>
+      </div>
+      <span class="menu__label">{{ user.username }}</span>
+    </router-link>
 
-      <b-collapse id="nav-collapse" is-nav>
-        <b-navbar-nav>
-          <b-nav-item><router-link :to="{ name: 'Algorithms' }">Algorithms</router-link></b-nav-item>
-          <b-nav-item><router-link :to="{ name: 'Tags' }">Tags</router-link></b-nav-item>
-          <b-nav-item><router-link :to="{ name: 'AlgorithmManager' }">AlgorithmManager</router-link></b-nav-item>
-          <b-nav-item><router-link :to="{ name: 'TagManager' }">TagManager</router-link></b-nav-item>
-          <b-nav-item><router-link :to="{ name: 'LevelManager' }">LevelManager</router-link></b-nav-item>
-        </b-navbar-nav>
-
-        <!-- Right aligned nav items -->
-        <b-navbar-nav class="ml-auto">
-          <b-nav-item-dropdown right>
-            <!-- Using 'button-content' slot -->
-            <template #button-content>
-              <em>{{ user ? user.username : '' }}</em>
-            </template>
-            <b-dropdown-item><router-link :to="{ name: 'Profile' }">Profile</router-link></b-dropdown-item>
-            <b-dropdown-item><router-link :to="{ name: 'Settings' }">Settings</router-link></b-dropdown-item>
-            <b-dropdown-item @click="sendLogoutRequest()">Logout</b-dropdown-item>
-          </b-nav-item-dropdown>
-        </b-navbar-nav>
-
-      </b-collapse>
-    </b-navbar>
-  </div>
+    <a v-if="isAuthenticated" class="menu-link" @click="sendLogoutRequest()">
+      Logout
+    </a>
+  </nav>
 </template>
 
 <script>
@@ -39,24 +44,97 @@ export default {
   name: 'Menu',
   computed: {
     ...mapState({
-      user: state => state.auth.user
+      user: state => state.auth.user,
+      isAuthenticated: state => state.auth.isAuthenticated
     })
+  },
+  data() {
+    return {
+      collapsed: false,
+      menuLinks: null
+    };
+  },
+  mounted() {
+    this.menuLinks = [
+      {
+        to: { name: 'Dashboard' },
+        label: 'Dashboard',
+        icon: 'menu-app'
+      },
+      {
+        to: { name: 'Algorithms' },
+        label: 'Learn',
+        icon: 'menu-app'
+      },
+      {
+        to: { name: 'Tags' },
+        label: 'Practice',
+        icon: 'menu-app'
+      },
+      {
+        to: { name: 'Settings' },
+        label: 'Settings',
+        icon: 'menu-app'
+      },
+    ];
   },
   methods: {
     ...mapActions({
-      logout: 'auth/logout' 
+      logout: 'auth/logout',
+      error: 'alert/error'
     }),
     async sendLogoutRequest() {
       try {
         await this.logout();
-        this.$router.push({ name: 'Home' });
-      } catch (error) {
-        console.log(error);
+        this.$router.push({ name: 'LoginRegisterControl', params: { mode: 'login' } });
+      } catch (err) {
+        this.error({ message: `Error occured logging out: ${err.message}`, redirect: false });
       }
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
+  .menu {
+    width: $menu-width;
+    height: inherit;
+    position: relative;
+    transition: $menu-width-transition;
+    flex-shrink: 0;
+  }
+
+  .menu__collapsed {
+    width: $menu-icon-width;
+
+    .menu__label {
+      display: none;
+    }
+  }
+
+  .menu__link {
+    display: flex;
+    align-items: center;
+  }
+
+  .menu__icon-container {
+    width: $menu-icon-width;
+    height: $menu-icon-width;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .menu__label {
+    white-space: nowrap;
+  }
+
+  .menu__border {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    width: $menu-border-width;
+    height: inherit;
+  }
 </style>

@@ -78,7 +78,7 @@
         <template #modal-footer="{ close }">
           <b-button
             variant="primary"
-            :disabled="experienceNeeded !== 0"
+            :disabled="experienceNeeded === 0"
             @click="saveLevel(close)"
           >
             Save
@@ -124,6 +124,7 @@
 
 <script>
 import api from '@/config/api';
+import { mapActions } from 'vuex';
 
 export default {
   name: 'LevelManager',
@@ -148,31 +149,31 @@ export default {
   },
   mounted: async function() {
     try {
-      // Make the initial requests
-      const getLevels = api.get('/level/all');
-
-      // Await the data
-      this.levels = (await getLevels).data;
+      // Make the initial request(s)
+      this.levels = (await api.get('/level/all')).data.sort((a, b) => b.number - a.number);
 
       console.log('setting levels...', this.levels);
 
       // Find the largest level number to determine the next one to create
       if (this.levels.length > 0) {
-        this.nextLevelNumber = this.levels.sort((a, b) => a.number - b.number)[0].number + 1;
+        this.nextLevelNumber = this.levels.sort((a, b) => b.number - a.number)[0].number + 1;
       }
-      this.editorHeader = `Creating Level ${this.nextLevelNumber}`;
+      this.clearLevelData();
 
-    } catch (error) {
-      console.log('error when mounting component: ', error);
+    } catch (err) {
+      this.error({ message: `Error loading levels data: ${err.message}`, redirect: false });
     }
   },
   methods: {
+    ...mapActions({
+      error: 'alert/error'
+    }),
     loadLevelData() {
       this.number = this.selectedLevel.number;
       this.experienceNeeded = this.selectedLevel.experienceNeeded;
     },
     clearLevelData() {
-      this.number = 0;
+      this.number = this.nextLevelNumber;
       this.experienceNeeded = 0; 
       this.editorHeader = `Creating Level ${this.nextLevelNumber}`;
       this.editorCreate = true;
@@ -204,16 +205,16 @@ export default {
                       `updated level ${this.selectedLevel.number}`);
 
         // Reload all of the level data to refresh the list
-        this.levels = (await api.get('/level/all')).data;
+        this.levels = (await api.get('/level/all')).data.sort((a, b) => b.number - a.number);
         console.log('setting levels...', this.levels);
 
         // Update the next level number if necessary
-        if (this.number === this.nextLevelNumber) {
+        if (this.editorCreate) {
           ++this.nextLevelNumber;
         }
         
-      } catch (error) {
-        console.log('error when saving level data: ', error);
+      } catch (err) {
+        this.error({ message: `Error saving level data: ${err.message}`, redirect: false });
 
       } finally {
         // Then clear the modal fields and close it
@@ -235,16 +236,20 @@ export default {
         await api.post('/level/delete', payload);
 
         // Reload all of the level data to refresh the list
-        this.levels = (await api.get('/level/all')).data;
+        this.levels = (await api.get('/level/all')).data.sort((a, b) => b.number - a.number);
         console.log('setting levels...', this.levels);
 
         // Update the next level number if necessary
-        if (this.number === this.nextLevelNumber - 1) {
+        if (this.number === this.nextLevelNumber) {
           --this.nextLevelNumber;
         }
       
-      } catch (error) {
-        console.log('error when saving level data: ', error);
+      } catch (err) {
+        this.error({ message: `Error deleting level data: ${err.message}`, redirect: false });
+
+      } finally {
+        // Then clear the modal fields and close it
+        this.clearLevelData();
       }
     },
     launchConfirmDelete(level) {
@@ -254,9 +259,12 @@ export default {
     async confirmDeleteLevel(close) {
       try {
         await this.deleteLevel();
-
-      } catch (error) {
-        console.log('error when deleting level data: ', error);
+        // Reload all of the level data to refresh the list
+        this.levels = (await api.get('/level/all')).data.sort((a, b) => b.number - a.number);
+        console.log('setting levels...', this.levels);
+      
+      } catch (err) {
+        this.error({ message: `Error reloading level data: ${err.message}`, redirect: false });
 
       } finally {
         close();

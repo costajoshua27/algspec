@@ -21,8 +21,10 @@ import {
   AlertPlugin,
   SpinnerPlugin,
   PopoverPlugin,
+  ProgressPlugin,
   BIcon,
   BIconExclamationCircleFill,
+  BIconMenuApp
 } from 'bootstrap-vue';
 import Multiselect from 'vue-multiselect';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -44,8 +46,10 @@ Vue.use(FormGroupPlugin);
 Vue.use(AlertPlugin);
 Vue.use(SpinnerPlugin);
 Vue.use(PopoverPlugin);
+Vue.use(ProgressPlugin);
 Vue.component('BIcon', BIcon);
 Vue.component('BIconExclamationCircleFill', BIconExclamationCircleFill);
+Vue.component('BIconMenuApp', BIconMenuApp);
 
 Vue.config.productionTip = false;
 
