@@ -1,10 +1,7 @@
 <template>
-  <div>
-    HOME
-    isAuthenticated: {{ isAuthenticated }}
-    <br>
-    user: {{ JSON.stringify(user) }}
-  </div>
+  <h1 class="text-center mt-5">
+    This is home!
+  </h1>
 </template>
 
 <script>

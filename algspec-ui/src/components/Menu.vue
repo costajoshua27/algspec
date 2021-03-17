@@ -1,11 +1,16 @@
 <template>
   <nav :class="{ menu: true, menu__collapsed: collapsed}">
+    <!-- Border, collapser -->
     <div class="menu__border"></div>
+    <button class="menu__toggle-collapse" @click="toggleCollapse">{{ collapsed }}</button>
+
+    <!-- Main nav links -->
     <router-link
-      v-for="link in menuLinks"
+      v-for="link in (isAuthenticated ? authMenuLinks : unauthMenuLinks)"
       class="menu__link"
       :to="link.to"
       :key="link.label"
+      v-b-popover.hover.right="link.label"
     >
       <div class="menu__icon-container">
         <b-icon
@@ -15,25 +20,22 @@
       </div>
       <span class="menu__label">{{ link.label }}</span>
     </router-link>
-    <br>
-    <button class="btn" @click="() => collapsed = !collapsed"> HI</button>
 
-    <router-link
-      v-if="isAuthenticated"
-      class="menu__link"
-      :to="{ name: 'Profile' }">
+    <!-- User section of the menu -->
+    <div v-if="isAuthenticated" class="menu__user-container">
       <div class="menu__icon-container">
         <b-icon
           class="menu__icon"
-          icon="menu-app"
+          icon="person-fill"
+          id="user-profile-pic"
         ></b-icon>
+        <b-popover target="user-profile-pic" triggers="hover focus" placement="top">
+          <b-button @click="sendLogoutRequest">Logout</b-button>
+        </b-popover>
       </div>
-      <span class="menu__label">{{ user.username }}</span>
-    </router-link>
+      <span class="menu__username">{{ user.username }}</span>
+    </div>
 
-    <a v-if="isAuthenticated" class="menu-link" @click="sendLogoutRequest()">
-      Logout
-    </a>
   </nav>
 </template>
 
@@ -51,31 +53,44 @@ export default {
   data() {
     return {
       collapsed: false,
-      menuLinks: null
+      authMenuLinks: null,
+      unauthMenuLinks: null
     };
   },
-  mounted() {
-    this.menuLinks = [
+  created() {
+    this.authMenuLinks = [
       {
         to: { name: 'Dashboard' },
         label: 'Dashboard',
-        icon: 'menu-app'
+        icon: 'grid1x2-fill'
       },
       {
         to: { name: 'Algorithms' },
         label: 'Learn',
-        icon: 'menu-app'
+        icon: 'bar-chart-fill'
       },
       {
         to: { name: 'Tags' },
         label: 'Practice',
-        icon: 'menu-app'
+        icon: 'diagram-3-fill'
       },
       {
         to: { name: 'Settings' },
         label: 'Settings',
-        icon: 'menu-app'
+        icon: 'gear-fill'
       },
+    ];
+    this.unauthMenuLinks = [
+      {
+        to: { name: 'Home' },
+        label: 'Home',
+        icon: 'house-fill'
+      },
+      {
+        to: { name: 'LoginRegisterControl', params: { mode: 'login' } },
+        label: 'Login',
+        icon: 'door-open-fill'
+      }
     ];
   },
   methods: {
@@ -90,6 +105,9 @@ export default {
       } catch (err) {
         this.error({ message: `Error occured logging out: ${err.message}`, redirect: false });
       }
+    },
+    toggleCollapse() {
+      this.collapsed = !this.collapsed;
     }
   }
 };
@@ -102,12 +120,18 @@ export default {
     position: relative;
     transition: $menu-width-transition;
     flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
   }
 
   .menu__collapsed {
     width: $menu-icon-width;
 
     .menu__label {
+      display: none;
+    }
+
+    .menu__username {
       display: none;
     }
   }
@@ -137,4 +161,15 @@ export default {
     width: $menu-border-width;
     height: inherit;
   }
+
+  .menu__user-container {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+  }
+
+  .menu__username {
+    font-weight: 700;
+  }
+
 </style>
