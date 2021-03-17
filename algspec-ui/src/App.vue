@@ -72,7 +72,7 @@ export default {
     .main {
       height: inherit;
       padding: 0;
-      padding-left: $menu-border-width;
+      // padding-left: $menu-collapse-width;
       overflow-y: auto;
     }
   }
@@ -128,9 +128,10 @@ export default {
     .menu {
       background-color: $menu-lm-background;
 
-      &__border {
-        background-color: $menu-lm-border;
+      &__collapser {
+        background-color: $menu-lm-background;
       }
+
     }
 
     .card, .modal-content {
@@ -189,8 +190,8 @@ export default {
     .menu {
       background-color: $menu-dm-background;
 
-      &__border {
-        background-color: $menu-dm-border;
+      &__collapser {
+        background-color: $menu-dm-background;
       }
 
     }

@@ -1,8 +1,15 @@
 <template>
   <nav :class="{ menu: true, menu__collapsed: collapsed}">
-    <!-- Border, collapser -->
-    <div class="menu__border"></div>
-    <button class="menu__toggle-collapse" @click="toggleCollapse">{{ collapsed }}</button>
+    <!-- Collapser -->
+    <div class="menu__collapser" @click="toggleCollapse">
+      <b-icon
+        icon="caret-right-fill"
+        class="menu__icon"
+        id="menu__collapse-icon"
+      ></b-icon>
+    </div>
+
+    <h4 class="menu__brand mt-3 ml-3 mb-3">algspec</h4>
 
     <!-- Main nav links -->
     <router-link
@@ -41,6 +48,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex';
+import gsap from 'gsap';
 
 export default {
   name: 'Menu',
@@ -93,6 +101,9 @@ export default {
       }
     ];
   },
+  mounted() {
+    this.animateCollapser();
+  },
   methods: {
     ...mapActions({
       logout: 'auth/logout',
@@ -108,6 +119,14 @@ export default {
     },
     toggleCollapse() {
       this.collapsed = !this.collapsed;
+      this.animateCollapser();
+    },
+    animateCollapser() {
+      gsap.to('#menu__collapse-icon', {
+        duration: 0.3,
+        rotation: this.collapsed ? 0 : 180,
+        transformOrigin: 'center center'
+      });
     }
   }
 };
@@ -134,6 +153,10 @@ export default {
     .menu__username {
       display: none;
     }
+
+    .menu__brand {
+      display: none;
+    }
   }
 
   .menu__link {
@@ -154,14 +177,6 @@ export default {
     white-space: nowrap;
   }
 
-  .menu__border {
-    position: absolute;
-    left: 100%;
-    top: 0;
-    width: $menu-border-width;
-    height: inherit;
-  }
-
   .menu__user-container {
     margin-top: auto;
     display: flex;
@@ -172,4 +187,22 @@ export default {
     font-weight: 700;
   }
 
+  .menu__collapser {
+    position: absolute;
+    left: 100%;
+    top: 50%;
+    width: $menu-collapse-width;
+    height: $menu-collapse-height;
+    border-top-right-radius: $menu-collapse-border-radius;
+    border-bottom-right-radius: $menu-collapse-border-radius;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  .menu__brand {
+    text-align: left;
+    font-weight: 700;
+  }
 </style>
