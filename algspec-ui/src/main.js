@@ -21,8 +21,17 @@ import {
   AlertPlugin,
   SpinnerPlugin,
   PopoverPlugin,
+  ProgressPlugin,
   BIcon,
   BIconExclamationCircleFill,
+  BIconGrid1x2Fill,
+  BIconBarChartFill,
+  BIconDiagram3Fill,
+  BIconGearFill,
+  BIconHouseFill,
+  BIconDoorOpenFill,
+  BIconPersonFill,
+  BIconCaretRightFill
 } from 'bootstrap-vue';
 import Multiselect from 'vue-multiselect';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -44,8 +53,17 @@ Vue.use(FormGroupPlugin);
 Vue.use(AlertPlugin);
 Vue.use(SpinnerPlugin);
 Vue.use(PopoverPlugin);
+Vue.use(ProgressPlugin);
 Vue.component('BIcon', BIcon);
 Vue.component('BIconExclamationCircleFill', BIconExclamationCircleFill);
+Vue.component('BIconGrid1x2Fill', BIconGrid1x2Fill);
+Vue.component('BIconBarChartFill', BIconBarChartFill);
+Vue.component('BIconDiagram3Fill', BIconDiagram3Fill);
+Vue.component('BIconGearFill', BIconGearFill);
+Vue.component('BIconHouseFill', BIconHouseFill);
+Vue.component('BIconDoorOpenFill', BIconDoorOpenFill);
+Vue.component('BIconPersonFill', BIconPersonFill);
+Vue.component('BIconCaretRightFill', BIconCaretRightFill);
 
 Vue.config.productionTip = false;
 

@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import api from '@/config/api';
 import TestAnimation from '@/components/animations/TestAnimation';
 
@@ -29,10 +30,15 @@ export default {
       // Get the algorithm data
       this.algorithm = (await api.get(`/algorithm/${this.name}`)).data;
 
-    } catch (error) {
-      console.log('error when mounting components: ', error);
+    } catch (err) {
+      this.error({ message: `Error loading algorithm data: ${err.message}`, redirect: false });
     }
   },
+  methods: {
+    ...mapActions({
+      error: 'alert/error'
+    })
+  }
 }
 </script>
 

@@ -12,21 +12,13 @@
           <b-button @click="createTag()">Create a tag</b-button>
         </b-row>
         <b-row align-h="center">
-          <b-card-group deck class="mx-4 mt-2 mb-4">
-            <b-card :key="tag.name" v-for="tag in tags">
-              <b-row>
-                <b-col cols="12">
-                  <h6>{{ tag.name }}</h6>
-                </b-col>
-                <b-col cols="12">
-                  <b-button @click="editTag(tag)">Edit</b-button>
-                </b-col>
-                <b-col>
-                  <b-button variant="danger" @click="launchConfirmDelete(tag)">Delete</b-button>
-                </b-col>
-              </b-row>
-            </b-card>
-          </b-card-group>
+            <b-col>
+              <b-card :key="tag.name" v-for="tag in tags">
+                <h6>Name: {{ tag.name }}</h6>
+                <b-button class="mr-3" @click="editTag(tag)">Edit</b-button>
+                <b-button variant="danger" @click="launchConfirmDelete(tag)">Delete</b-button>
+              </b-card>
+            </b-col>
         </b-row>
       </b-card>
 
@@ -114,6 +106,7 @@
 
 <script>
 import api from '@/config/api';
+import { mapActions } from 'vuex';
 
 const TAG_FIELDS = [
   'name',
@@ -137,11 +130,14 @@ export default {
     try {
       this.tags = (await api.get('/tag/all')).data;
       console.log('setting tags...', this.tags);
-    } catch (error) {
-      console.log('error when mounting component: ', error);
+    } catch (err) {
+      this.error({ message: `Error loading tags data: ${err.message}`, redirect: false });
     }
   },
   methods: {
+    ...mapActions({
+      error: 'alert/error'
+    }),
     loadTagData() {
       for (let field of TAG_FIELDS) {
         this[field] = this.selectedTag[field];
@@ -185,8 +181,8 @@ export default {
         this.tags = (await api.get('/tag/all')).data;
         console.log('setting tags...', this.tags);
         
-      } catch (error) {
-        console.log('error when saving tag data: ', error);
+      } catch (err) {
+        this.error({ message: `Error saving tag data: ${err.message}`, redirect: false });
 
       } finally {
         // Then clear the modal fields and close it
@@ -211,8 +207,8 @@ export default {
         this.tags = (await api.get('/tag/all')).data;
         console.log('setting tags...', this.tags);
 
-      } catch (error) {
-        console.log('error when saving tag data: ', error);
+      } catch (err) {
+        this.error({ message: `Error deleting tag data: ${err.message}`, redirect: false });
       }
     },
     launchConfirmDelete(tag) {
@@ -226,8 +222,8 @@ export default {
         this.tags = (await api.get('/tag/all')).data;
         console.log('setting tags...', this.tags);
 
-      } catch(error) {
-        console.log('error when deleting tag data: ', error);
+      } catch(err) {
+        this.error({ message: `Error reloading tag data: ${err.message}`, redirect: false });
 
       } finally {
         close();

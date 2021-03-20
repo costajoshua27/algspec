@@ -12,21 +12,13 @@
           <b-button @click="createAlgorithm()">Create an algorithm</b-button>
         </b-row>
         <b-row align-h="center">
-          <b-card-group deck class="mx-4 mt-2 mb-4">
-            <b-card :key="alg.name" v-for="alg in algorithms">
-              <b-row>
-                <b-col cols="12">
-                  <h6>{{ alg.name }}</h6>
-                </b-col>
-                <b-col cols="12">
-                  <b-button @click="editAlgorithm(alg)">Edit</b-button>
-                </b-col>
-                <b-col cols="12">
-                  <b-button variant="danger" @click="launchConfirmDelete(alg)">Delete</b-button>
-                </b-col>
-              </b-row>
-            </b-card>
-          </b-card-group>
+            <b-col>
+              <b-card :key="alg.name" v-for="alg in algorithms">
+                <h6>Name: {{ alg.name }}</h6>
+                <b-button class="mr-3" @click="editAlgorithm(alg)">Edit</b-button>
+                <b-button variant="danger" @click="launchConfirmDelete(alg)">Delete</b-button>
+              </b-card>
+            </b-col>
         </b-row>
       </b-card>
 
@@ -237,6 +229,7 @@
 
 <script>
 import api from '@/config/api';
+import { mapActions } from 'vuex';
 import { PrismEditor } from 'vue-prism-editor';
 import 'vue-prism-editor/dist/prismeditor.min.css';
 
@@ -297,11 +290,14 @@ export default {
       console.log('setting algorithms...', this.algorithms);
       console.log('setting the available tags...', this.tagPool);
 
-    } catch (error) {
-      console.log('error when mounting component: ', error);
+    } catch (err) {
+      this.error({ message: `Error loading algorithm data: ${err.message}`, redirect: false });
     }
   },
   methods: {
+    ...mapActions({
+      error: 'alert/error'
+    }),
     highlighter(code) {
       return highlight(code, languages.json);
     },
@@ -386,8 +382,8 @@ export default {
         this.algorithms = (await api.get('/algorithm/all')).data;
         console.log('setting algorithms...', this.algorithms);
         
-      } catch (error) {
-        console.log('error when saving algorithm data: ', error);
+      } catch (err) {
+        this.error({ message: `Error saving algorithm data: ${err.message}`, redirect: false });
 
       } finally {
         // Then clear the modal fields and close it
@@ -412,8 +408,8 @@ export default {
         this.algorithms = (await api.get('/algorithm/all')).data;
         console.log('setting algorithms...', this.algorithms);
       
-      } catch (error) {
-        console.log('error when saving algorithm data: ', error);
+      } catch (err) {
+        this.error({ message: `Error deleting algorithm: ${err.message}`, redirect: false });
       }
     },
     launchConfirmDelete(alg) {
@@ -423,9 +419,12 @@ export default {
     async confirmDeleteAlgorithm(close) {
       try {
         await this.deleteAlgorithm();
-
-      } catch (error) {
-        console.log('error when deleting algorithm data: ', error);
+        // Reload all of the algorithm data to refresh the list
+        this.algorithms = (await api.get('/algorithm/all')).data;
+        console.log('setting algorithms...', this.algorithms);
+      
+      } catch (err) {
+        this.error({ message: `Error reloading algorithm data: ${err.message}`, redirect: false });
 
       } finally {
         close();
