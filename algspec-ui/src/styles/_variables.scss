@@ -8,8 +8,8 @@ $font-primary: 'Poppins', sans-serif;
 // ------------------------------
 // Base colors
 $lm-primary: white;
-$lm-secondary: lightgray;
-$lm-text: black;
+$lm-secondary: #D0E8F2;
+$lm-text: #456268;
 // Base button
 $lm-btn: #293857;
 $lm-btn-text: #E1F5E9;
@@ -32,8 +32,8 @@ $lm-btn-danger-hover: #B9403E;
 $lm-btn-danger-hover-text: #E1F5E9;
 $lm-btn-danger-hover-border: #E1F5E9;
 // Links
-$lm-link: blue;
-$lm-link-hover: darkblue;
+$lm-link: #456268;
+$lm-link-hover: #19273F;
 
 // Declare dark mode colors (dm)
 // ------------------------------
@@ -64,7 +64,7 @@ $dm-btn-danger-hover-text: #E1F5E9;
 $dm-btn-danger-hover-border: #E1F5E9;
 // Links
 $dm-link: #E1F5E9;
-$dm-link-hover: #53FF53;
+$dm-link-hover: #a0ada6;
 
 // Menu config vars
 $menu-width: 200px;
@@ -73,5 +73,5 @@ $menu-collapse-width: 20px;
 $menu-collapse-height: 40px;
 $menu-collapse-border-radius: 5px;
 $menu-dm-background: #243B63;
-$menu-lm-background: lightgray;
+$menu-lm-background: #D0E8F2;
 $menu-width-transition: width 0.3s;
