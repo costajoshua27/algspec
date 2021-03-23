@@ -7,7 +7,7 @@ const passport = require('passport');
 // Auth controllers
 // ---------------
 const me = async (req, res) => {
-    return res.status(200).send(req.session.user);
+  return res.status(200).send(req.session.user ? { user: await User.findById(req.session.user._id).exec() } : { user : null });
 };
 
 const isAuthenticated = async (req, res) => {
@@ -65,7 +65,9 @@ const register = async (req, res) => {
       currentExperience: 0,
       settings: {
         theme: 'light'
-      }
+      },
+      algorithmsCompleted: [],
+      algorithmsInProgress: []
     });
     await newUser.save();
 
@@ -112,10 +114,10 @@ const updateSettings = async (req, res) => {
       return res.status(400).send({ message: `User with that id does not exist` });
     }
 
-    user.settings.theme = theme;
-    await user.save();
-
-    return res.status(200).send(user);
+    const updatedUser = await User.findByIdAndUpdate(id,
+                                    { settings: { theme }},
+                                    { new: true }).exec();
+    return res.status(200).send(updatedUser);
 
   } catch (error) {
     return res.status(500).send({ message: `Database error: ${error}` });
