@@ -6,7 +6,7 @@ const userController = require('../controllers/userController');
 const { ensureAuthenticated } = require('../middlewares/auth');
 
 // GET
-router.get('/me', ensureAuthenticated, userController.me);
+router.get('/me', userController.me);
 router.get('/isAuthenticated', userController.isAuthenticated);
 
 // POST

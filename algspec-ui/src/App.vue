@@ -22,9 +22,6 @@ export default {
   components: {
     Menu,
   },
-  mounted() {
-    this.getUserTheme({ vm: this });
-  },
   computed: {
     ...mapState({
       globalLoading: state => state.globalLoading,
@@ -34,6 +31,9 @@ export default {
       isAuthenticated: state => state.auth.isAuthenticated,
     })
   },
+  mounted() {
+    this.getUserTheme({ vm: this });
+  },
   watch: {
     $route() {
       if (this.variant || this.message) {
@@ -42,7 +42,8 @@ export default {
         } else {
           this.clearAlert();
         }
-      } 
+      }
+      this.getUserTheme({ vm: this });
     }
   },
   methods: {

@@ -99,20 +99,34 @@ router.beforeEach(async (to, from, next) => {
   const publicPages = ['/', '/auth/login', '/auth/register'];
   const authRequired = !publicPages.includes(to.path);
 
-  if (authRequired) {
-    if (!((await api.get('user/isAuthenticated')).data.isAuthenticated)) {
-      localStorage.removeItem('user');
-      return next('/auth/login');
+  const user = (await api.get('user/me')).data.user;
+
+  if (user) {
+
+    // Assuming we are authenticated, set our user state to the most up to date version
+    store.commit('auth/setUser', user);
+    store.commit('auth/setIsAuthenticated' ,true);
+
+    if (!authRequired) {
+      return next('/dashboard');
     } else {
-      const user = (await api.get('user/me')).data;
-      store.commit('auth/setUser', user);
-      if (to.path === '/') {
-        return next('/dashboard');
-      }
+      return next();
     }
+
+  } else {
+
+    store.commit('auth/setUser', null);
+    store.commit('auth/setIsAuthenticated', false);
+
+    if (!authRequired) {
+      return next();
+    } else {
+      store.dispatch('alert/error', { message: 'You must be authenticated to view this resource' });
+      return next('/auth/login');
+    }
+
   }
 
-  return next();
 });
 
 export default router;
