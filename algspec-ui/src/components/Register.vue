@@ -105,7 +105,7 @@
           "
         >
           <b-spinner v-if="registering" small></b-spinner>
-          <p v-else>Register</p>
+          <p v-else class="button-text">Register</p>
         </b-button>
       </div>
       
@@ -246,5 +246,5 @@ export default {
     height: 75%;
     width: 100%;
   }
-
+ 
 </style>

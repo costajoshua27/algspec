@@ -57,13 +57,12 @@
           :disabled="!emailValid || !passwordValid || loggingIn"
         >
           <b-spinner v-if="loggingIn" small></b-spinner>
-          <p v-else>Login</p>
+          <p v-else class="button-text">Login</p>
         </b-button>
       </div>
-    </b-form>
-
-    <!-- Link to register -->
+      <!-- Link to register -->
     <router-link :to="{ name: 'LoginRegisterControl', params: { mode: 'register' } }">Don't have an account? Register here!</router-link>
+    </b-form>
 
   </b-card>
 </template>

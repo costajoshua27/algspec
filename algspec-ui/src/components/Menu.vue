@@ -135,6 +135,7 @@ export default {
 <style lang="scss" scoped>
   .menu {
     width: $menu-width;
+    font-size: 1.6rem;
     height: inherit;
     position: relative;
     transition: $menu-width-transition;
@@ -204,5 +205,6 @@ export default {
   .menu__brand {
     text-align: left;
     font-weight: 700;
+    font-size: 3.0rem;
   }
 </style>

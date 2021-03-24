@@ -56,6 +56,10 @@ export default {
 </script>
 
 <style lang="scss">
+  html {
+    font-size: $font-root-size;
+  }
+  
   #app {
     font-family: $font-primary;
     text-align: center;
@@ -72,7 +76,6 @@ export default {
     .main {
       height: inherit;
       padding: 0;
-      // padding-left: $menu-collapse-width;
       overflow-y: auto;
     }
   }
@@ -112,6 +115,9 @@ export default {
         border-color: $lm-btn-primary-hover-border;
       }
 
+      &-primary:disabled {
+        background-color: $lm-btn-primary-disabled;
+      }
       &-danger {
         color: $lm-btn-danger-text;
         background-color: $lm-btn-danger;
@@ -136,6 +142,22 @@ export default {
 
     .card, .modal-content {
       background-color: $lm-secondary;
+    }
+
+    .form-control {
+      background-color: $lm-primary;
+      border: none;
+      border-bottom: 2px solid $lm-text;
+      color: $lm-text;
+    }
+
+    .form-control:focus {
+      background-color: $lm-primary;
+      color: $lm-text;
+    }
+
+    .button-text {
+      color: $lm-text;
     }
   }
 
@@ -173,6 +195,10 @@ export default {
         background-color: $dm-btn-primary-hover;
         border-color: $dm-btn-primary-hover-border;
       }
+      
+      &-primary:disabled {
+        background-color: $dm-btn-primary-disabled;
+      }
 
       &-danger {
         color: $dm-btn-danger-text;
@@ -198,6 +224,22 @@ export default {
 
     .card, .modal-content {
       background-color: $dm-secondary;
+    }
+
+    .form-control {
+      background-color: $dm-primary;
+      border: none;
+      border-bottom: 2px solid $dm-text;
+      color: $dm-text;
+    }
+
+    .form-control:focus {
+      background-color: $dm-primary;
+      color: $dm-text;
+    }
+
+    .button-text {
+      color: $dm-primary;
     }
   }
 </style>

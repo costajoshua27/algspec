@@ -3,6 +3,7 @@
 
 // Declare used font(s)
 $font-primary: 'Poppins', sans-serif;
+$font-root-size: 62.5%;
 
 // Declare light mode colors (lm)
 // ------------------------------
@@ -18,12 +19,13 @@ $lm-btn-hover: #293857;
 $lm-btn-hover-text: #E1F5E9;
 $lm-btn-hover-border: #293857;
 // Primary(confirm) button
-$lm-btn-primary: #E1F5E9;
+$lm-btn-primary: #D0E8F2;
 $lm-btn-primary-text: #243B63;
 $lm-btn-primary-border: #243B63;
 $lm-btn-primary-hover: #53FF53;
 $lm-btn-primary-hover-text: #243B63;
 $lm-btn-primary-hover-border: #243B63;
+$lm-btn-primary-disabled: #a6bdc7;
 // Danger(cancel) button
 $lm-btn-danger: #FFBABA;
 $lm-btn-danger-text: #243B63;
@@ -37,7 +39,7 @@ $lm-link-hover: #19273F;
 
 // Declare dark mode colors (dm)
 // ------------------------------
-// Base colors
+// Base colors#
 $dm-primary: #0E1C36;
 $dm-secondary: #243B63;
 $dm-text: #E1F5E9;
@@ -55,6 +57,7 @@ $dm-btn-primary-border: #243B63;
 $dm-btn-primary-hover: #53FF53;
 $dm-btn-primary-hover-text: #243B63;
 $dm-btn-primary-hover-border: #243B63;
+$dm-btn-primary-disabled: #9bAAA1;
 // Danger(cancel) button
 $dm-btn-danger: #FFBABA;
 $dm-btn-danger-text: #243B63;

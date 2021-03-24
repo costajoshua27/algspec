@@ -82,47 +82,52 @@ export default {
   p {
     margin-bottom: 0;
   }
-   /deep/ .card {
-    /deep/ &-style {
+  
+  /deep/ .card {
+
+    //  height: 75vh;
+    //  min-height: 500px;
+
+    &-style {
       background: transparent;
       width: 80%;
       height: 80%;
       border: none;
     }
 
-    /deep/ &-body {
+    &-body {
       padding: 0;
     }
 
-    /deep/ &-title {
+    &-title {
       text-align: left;
-      font-size: 2.5rem;
+      font-size: 3rem;
       margin-bottom: 25px;
     }
   }
   /deep/ .form {
-    /deep/ &-style {
-      height: 50%;
+    &-style {
+      height: 45%;
       width: 100%;
     }
 
-  /deep/ &-row {
-    display: block;
-  }
+    &-row {
+      display: block;
+    }
 
-  /deep/ &-control {
-    background: $dm-primary;
-    border: none;
-    border-bottom: 2px solid $dm-text;
-    outline: none;
-    color: $dm-text;
-    width: 115%;
-  }
+    &-control {
+      outline: none;
+      width: 115%;
+    }
+
+    &-control-sm {
+      font-size: 1.25rem;
+    }
 }
   /deep/ .col-form-label {
     display: block;
     text-align: left;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     max-width: 100%;
   }
 
@@ -132,16 +137,27 @@ export default {
   }
 
   /deep/ .btn {
-    background: $dm-btn-primary;
+    font-size: 1.5rem;
     border-radius: 1.5rem;
     border: none;
     width: 50%;
   }
 
-  /deep/ .button-wrapper {
-    text-align: center;
-  }
+  /deep/ .button  {
+    &-wrapper {
+      text-align: center;
+    }
 
+    &-text {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+  
+  /deep/ a {
+    font-size: 1.5rem;
+  }
+  
   /* left side */
   .left-side-style {
     position: static;
