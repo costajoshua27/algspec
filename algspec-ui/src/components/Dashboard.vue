@@ -1,6 +1,5 @@
 <template>
   <div id="dashboard">
-<<<<<<< Updated upstream
     <b-container>
       <!-- Top row of learn page -->
       <b-row>
@@ -18,7 +17,7 @@
             <!-- Progress circle graph -->
             <b-col sm="6" class="my-2 my-lg-0">
               <b-card class="mr-2">
-                <AlgorithmProgress></AlgorithmProgress>
+                <ModuleProgress></ModuleProgress>
               </b-card>
             </b-col>
             <!-- Level Card -->
@@ -53,27 +52,26 @@
       </b-row>
 
       <h4 class="text-left">Resume Learning</h4>
+      <CategoryCarousel style="height: 500px"></CategoryCarousel>
       <!-- Bottom row of learn page -->
       <b-row>
         <!-- Insert carousel here -->
       </b-row>
     </b-container>
-=======
-    <ModuleProgress></ModuleProgress>
-    <Level></Level>
->>>>>>> Stashed changes
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
 import ModuleProgress from '@/components/ui/ModuleProgress';
+import CategoryCarousel from '@/components/ui/CategoryCarousel';
 import Level from '@/components/ui/Level';
 
 export default {
   name: 'Dashboard',
   components: {
     ModuleProgress,
+    CategoryCarousel,
     Level
   },
   computed: {
