@@ -1,8 +1,8 @@
 <template>
   <b-spinner v-if="levelDataLoading"></b-spinner>
   <div v-else>
-    Level {{ levelData.currentLevel }}:
-    <b-progress class="w-75 mx-auto" :max="levelData.experienceNeeded" variant="success">
+    <!-- Level {{ levelData.currentLevel }}: -->
+    <b-progress class="mx-auto" :max="levelData.experienceNeeded" variant="success">
       <b-progress-bar :value="levelData.currentExperience"> 
         <span><strong>{{ levelData.currentExperience}} / {{ levelData.experienceNeeded }}</strong></span>
       </b-progress-bar>

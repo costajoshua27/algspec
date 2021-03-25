@@ -31,7 +31,8 @@ import {
   BIconHouseFill,
   BIconDoorOpenFill,
   BIconPersonFill,
-  BIconCaretRightFill
+  BIconCaretRightFill,
+  BIconTrophy
 } from 'bootstrap-vue';
 import Multiselect from 'vue-multiselect';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -64,6 +65,7 @@ Vue.component('BIconHouseFill', BIconHouseFill);
 Vue.component('BIconDoorOpenFill', BIconDoorOpenFill);
 Vue.component('BIconPersonFill', BIconPersonFill);
 Vue.component('BIconCaretRightFill', BIconCaretRightFill);
+Vue.component('BIconTrophy', BIconTrophy);
 
 Vue.config.productionTip = false;
 

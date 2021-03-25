@@ -36,8 +36,13 @@
           icon="person-fill"
           id="user-profile-pic"
         ></b-icon>
-        <b-popover target="user-profile-pic" triggers="hover focus" placement="top">
-          <b-button @click="sendLogoutRequest">Logout</b-button>
+        <b-popover class="menu__popover-container" target="user-profile-pic" triggers="hover focus" placement="top">
+          <b-button class="menu__user-button">
+            <router-link id="menu__profile-link" :to="{name: 'Profile'}">
+              Profile
+            </router-link>
+          </b-button>
+          <b-button class="menu__user-button" @click="sendLogoutRequest">Logout</b-button>
         </b-popover>
       </div>
       <span class="menu__username">{{ user.username }}</span>
@@ -207,4 +212,17 @@ export default {
     font-weight: 700;
     font-size: 3.0rem;
   }
+
+  .menu__popover-container {
+    margin: -.3rem;
+  }
+
+  .menu__user-button {
+    margin: .3rem;
+  }
+
+  #menu__profile-link {
+    color:black;
+  }
+
 </style>
