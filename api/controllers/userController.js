@@ -1,6 +1,5 @@
 const { User } = require('../models/user.model');
 const { Level } = require('../models/level.model');
-const { Algorithm } = require('../models/algorithm.model');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 
@@ -61,13 +60,14 @@ const register = async (req, res) => {
       username,
       email,
       password: hashedPassword,
-      currentLevel: { number: levelOne.number, experienceNeeded: levelOne.experienceNeeded },
+      currentLevel: levelOne._id,
       currentExperience: 0,
+      isAdmin: false,
       settings: {
         theme: 'light'
       },
-      algorithmsCompleted: [],
-      algorithmsInProgress: []
+      modulesCompleted: [],
+      modulesInProgress: []
     });
     await newUser.save();
 
@@ -124,31 +124,6 @@ const updateSettings = async (req, res) => {
   }
 }
 
-// Algorithm-related controllers
-// -----------------------------
-const finishAlgorithm = async (req, res) => {
-  const {
-    username,
-    algorithmName
-  } = req.body;
-
-  try {
-    if (!(await Algorithm.findOne({ name: algorithmName }).exec())) {
-      return res.status(400).send({ message: `Algorithm with that name does not exist` });
-    }
-
-    const user = await user.findOne({ username }).exec();
-    if (!user) {
-      return res.status(400).send({ message: `User with that name does not exist` });
-    }
-
-
-
-  } catch (error) {
-    return res.status(500).send({ message: `Database error: ${error}` });
-  }
-};
-
 module.exports = {
   // Auth
   me,
@@ -160,7 +135,4 @@ module.exports = {
 
   // Settings-related
   updateSettings,
-
-  // Algorithm-related
-  finishAlgorithm,
 };

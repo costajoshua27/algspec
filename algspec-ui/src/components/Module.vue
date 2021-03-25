@@ -1,8 +1,6 @@
 <template>
-  <div v-if="algorithm !== null">
-    <p>name: {{ algorithm.name }}</p> 
-    <p>introduction: {{ algorithm.introduction }}</p>
-    <p>overview: {{ algorithm.overview }}</p>
+  <div v-if="module !== null">
+    <p>{{ module }}</p>
     <TestAnimation width=1000 />
   </div>
 </template>
@@ -13,25 +11,25 @@ import api from '@/config/api';
 import TestAnimation from '@/components/animations/TestAnimation';
 
 export default {
-  name: 'Algorithm',
+  name: 'Module',
   props: {
-    name: String,
+    id: String,
   },
   components: {
     TestAnimation
   },
   data: function() {
     return {
-      algorithm: null,
+      module: null,
     }
   },
   mounted: async function() {
     try {
-      // Get the algorithm data
-      this.algorithm = (await api.get(`/algorithm/${this.name}`)).data;
+      // Get the module data
+      this.module = (await api.get(`/module/${this.id}`)).data;
 
     } catch (err) {
-      this.error({ message: `Error loading algorithm data: ${err.message}`, redirect: false });
+      this.error({ message: `Error loading module data: ${err.message}`, redirect: false });
     }
   },
   methods: {

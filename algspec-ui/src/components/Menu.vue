@@ -13,7 +13,7 @@
 
     <!-- Main nav links -->
     <router-link
-      v-for="link in (isAuthenticated ? authMenuLinks : unauthMenuLinks)"
+      v-for="link in (isAuthenticated ? [...authMenuLinks, ...(user.isAdmin ? adminLinks : [])] : unauthMenuLinks)"
       class="menu__link"
       :to="link.to"
       :key="link.label"
@@ -67,6 +67,7 @@ export default {
     return {
       collapsed: false,
       authMenuLinks: null,
+      adminLinks: null,
       unauthMenuLinks: null
     };
   },
@@ -78,12 +79,12 @@ export default {
         icon: 'grid1x2-fill'
       },
       {
-        to: { name: 'Algorithms' },
+        to: { name: 'Learn' },
         label: 'Learn',
         icon: 'bar-chart-fill'
       },
       {
-        to: { name: 'Tags' },
+        to: { name: 'Practice' },
         label: 'Practice',
         icon: 'diagram-3-fill'
       },
@@ -93,6 +94,25 @@ export default {
         icon: 'gear-fill'
       },
     ];
+
+    this.adminLinks = [
+      {
+        to: { name: 'ModuleManager'},
+        label: 'Module Manager',
+        icon: 'gear-fill'
+      },
+      {
+        to: { name: 'CategoryManager'},
+        label: 'Category Manager',
+        icon: 'gear-fill'
+      },
+      {
+        to: { name: 'LevelManager'},
+        label: 'Level Manager',
+        icon: 'gear-fill'
+      }
+    ];
+
     this.unauthMenuLinks = [
       {
         to: { name: 'Home' },

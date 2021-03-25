@@ -11,13 +11,13 @@ const Dashboard             = () => import('@/components/Dashboard');
 const LoginRegisterControl  = () => import('@/components/LoginRegisterControl');
 const Profile               = () => import('@/components/Profile');
 const Settings              = () => import('@/components/Settings');
-const Algorithms            = () => import('@/components/Algorithms');
-const Algorithm             = () => import('@/components/Algorithm');
-const Tags                  = () => import('@/components/Tags');
+const Learn                 = () => import('@/components/Learn');
+const Module                = () => import('@/components/Module');
+const Practice              = () => import('@/components/Practice');
 const Tag                   = () => import('@/components/Tag');
 
-const AlgorithmManager      = () => import('@/components/admin/AlgorithmManager');
-const TagManager            = () => import('@/components/admin/TagManager');
+const ModuleManager         = () => import('@/components/admin/ModuleManager');
+const CategoryManager       = () => import('@/components/admin/CategoryManager');
 const LevelManager          = () => import('@/components/admin/LevelManager');
 
 const router = new Router({
@@ -50,20 +50,20 @@ const router = new Router({
       component: Settings
     },
     {
-      path: '/algorithms',
-      name: 'Algorithms',
-      component: Algorithms
+      path: '/learn',
+      name: 'Learn',
+      component: Learn
     },
     {
-      path: '/algorithm/:name',
-      name: 'Algorithm',
-      component: Algorithm,
+      path: '/module/:id',
+      name: 'Module',
+      component: Module,
       props: true,
     },
     {
-      path: '/tags',
-      name: 'Tags',
-      component: Tags
+      path: '/practice',
+      name: 'Practice',
+      component: Practice
     },
     {
       path: '/tag/:name',
@@ -73,14 +73,14 @@ const router = new Router({
     },
     // Need to check for admin priviledges eventually...
     {
-      path: '/admin/algorithm_manager',
-      name: 'AlgorithmManager',
-      component: AlgorithmManager
+      path: '/admin/module_manager',
+      name: 'ModuleManager',
+      component: ModuleManager
     },
     {
-      path: '/admin/tag_manager',
-      name: 'TagManager',
-      component: TagManager
+      path: '/admin/category_manager',
+      name: 'CategoryManager',
+      component: CategoryManager
     },
     {
       path: '/admin/level_manager',

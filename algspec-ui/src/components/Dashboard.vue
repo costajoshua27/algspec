@@ -1,5 +1,6 @@
 <template>
   <div id="dashboard">
+<<<<<<< Updated upstream
     <b-container>
       <!-- Top row of learn page -->
       <b-row>
@@ -57,18 +58,22 @@
         <!-- Insert carousel here -->
       </b-row>
     </b-container>
+=======
+    <ModuleProgress></ModuleProgress>
+    <Level></Level>
+>>>>>>> Stashed changes
   </div>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex';
-import AlgorithmProgress from '@/components/ui/AlgorithmProgress';
+import ModuleProgress from '@/components/ui/ModuleProgress';
 import Level from '@/components/ui/Level';
 
 export default {
   name: 'Dashboard',
   components: {
-    AlgorithmProgress,
+    ModuleProgress,
     Level
   },
   computed: {

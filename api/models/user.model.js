@@ -1,7 +1,4 @@
-const { algorithmSchema } = require('./algorithm.model');
-// const { achievementSchema } = require('./achievement.model');
 const { settingsSchema } = require('./settings.model');
-const { levelSchema } = require('./level.model');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -24,17 +21,21 @@ const userSchema = new Schema({
     required: true,
     minLength: 4
   },
-  currentLevel: levelSchema,
+  currentLevel: {
+    type: Schema.Types.ObjectId,
+    required: true
+  },
   currentExperience: {
     type: Number,
     required: true
   },
+  isAdmin: {
+    type: Boolean,
+    required: true
+  },
   settings: settingsSchema,
-  algorithmsCompleted: [algorithmSchema],
-  algorithmsInProgress: [algorithmSchema],
-  // Will eventually implement achievements!
-  // achievementsCompleted: [achievementSchema],
-  // achievementSInProgress: [achievementSchema]
+  modulesCompleted: [Schema.Types.ObjectId],
+  modulesInProgress: [Schema.Types.ObjectId],
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
